@@ -1,7 +1,7 @@
-<p>product-list works!</p>
-
-<ul>
-  @for (product of products(); track product.id) {
-  <li>{{ product.name }}</li>
-  }
-</ul>
+<div class="product-list-container">
+  <ul class="product-list">
+    @for (product of products(); track product.id) {
+    <app-product-list-entry [product]="product"></app-product-list-entry>
+    }
+  </ul>
+</div>
