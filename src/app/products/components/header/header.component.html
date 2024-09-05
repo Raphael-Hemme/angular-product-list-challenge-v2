@@ -1,7 +1,7 @@
 <header class="header-container">
   <div class="heading-and-search-warpper">
     <h1 class="page-heading">{{ pageTitle() }}</h1>
-    @if (currPage() === "PRODUCT-LIST") {
+    @if (hasPagination() && hasSearchInput()) {
       <app-search-form></app-search-form>
       <!-- Todo: Add pagination -->
     }

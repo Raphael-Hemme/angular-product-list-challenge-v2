@@ -8,8 +8,7 @@ import {
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './products/components/header/header.component';
 import { filter, tap } from 'rxjs';
-
-export type PageIdentifier = 'PRODUCT-LIST' | 'PRODUCT-DETAILS' | 'NOT-FOUND';
+import { HeaderService } from './core/services/header/header.service';
 
 @Component({
   selector: 'app-root',
@@ -22,25 +21,23 @@ export type PageIdentifier = 'PRODUCT-LIST' | 'PRODUCT-DETAILS' | 'NOT-FOUND';
 export class AppComponent implements OnInit {
   title = 'angular-product-list';
 
+  // Todo: check if needed: Keeping the currRoute signal here for now to possibly use it later.
   private currRoute = signal<string>('');
-  public currPage = computed<PageIdentifier>(() => {
-    if (this.currRoute().includes('products')) {
-      return 'PRODUCT-LIST';
-    } else if (this.currRoute().includes('product')) {
-      return 'PRODUCT-DETAILS';
-    } else {
-      return 'NOT-FOUND';
-    }
-  });
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private headerService: HeaderService,
+  ) {}
 
   ngOnInit() {
     // Long-lived subscription not cancelled because it should be active untill the app is destroyed
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        tap((event: NavigationEnd) => this.currRoute.set(event.url))
+        tap((event: NavigationEnd) => this.currRoute.set(event.url)),
+        tap((event: NavigationEnd) =>
+          this.headerService.currRoute.set(event.url),
+        ),
       )
       .subscribe();
   }

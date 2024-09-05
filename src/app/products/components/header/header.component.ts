@@ -1,12 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  Input,
-  Signal,
-} from '@angular/core';
-import { PageIdentifier } from '../../../app.component';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { SearchFormComponent } from '../search-form/search-form.component';
+import { HeaderService } from '../../../core/services/header/header.service';
 
 @Component({
   selector: 'app-header',
@@ -17,9 +11,16 @@ import { SearchFormComponent } from '../search-form/search-form.component';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  @Input() currPage!: Signal<PageIdentifier>;
+  // I'm using references to the signals from the header service here to avoid accessing the service directly in the template.
+  public pageTitle!: Signal<string>;
+  public hasSearchInput!: Signal<boolean>;
+  public hasPagination!: Signal<boolean>;
+  public productDetailsTitle!: Signal<null | string>;
 
-  public pageTitle = computed<string>(() => {
-    return this.currPage().toLowerCase();
-  });
+  constructor(private headerService: HeaderService) {
+    this.pageTitle = this.headerService.pageTitle;
+    this.hasSearchInput = this.headerService.hasSearchInput;
+    this.hasPagination = this.headerService.hasPagination;
+    this.productDetailsTitle = this.headerService.productDetailsTitle;
+  }
 }
