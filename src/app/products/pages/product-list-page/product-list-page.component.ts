@@ -1,11 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { ProductListEntryData } from '../../../core/services/api/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-list-page',
@@ -15,8 +18,17 @@ import { ProductListEntryData } from '../../../core/services/api/api.service';
   templateUrl: './product-list-page.component.html',
   styleUrl: './product-list-page.component.scss',
 })
-export class ProductListPageComponent implements OnInit {
+export class ProductListPageComponent implements OnInit, OnDestroy {
   public currProductList = signal<ProductListEntryData[]>([]);
+
+  public page = signal<number>(1);
+
+  private routeSub = new Subscription();
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.currProductList.set([
@@ -41,6 +53,24 @@ export class ProductListPageComponent implements OnInit {
       { id: 19, title: 'Product 19', brand: 'Test Brand', price: 300 },
       { id: 20, title: 'Product 20', brand: 'Test Brand', price: 300 },
     ]);
+
+    this.routeSub.add(
+      this.route.queryParams.subscribe((params) => {
+        if (params['page']) {
+          this.page.set(+params['page']);
+        } else {
+          // Navigate to the same route with the default query parameter
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page: 1 },
+            queryParamsHandling: 'merge', // Preserve other existing query params
+          });
+        }
+      }),
+    );
+  }
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
 }
-export { ProductListEntryData as Product };

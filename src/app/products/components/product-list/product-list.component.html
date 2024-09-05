@@ -1,7 +1,12 @@
 <div class="product-list-container">
   <ul class="product-list">
     @for (product of products(); track product.id) {
-      <app-product-list-entry [product]="product"></app-product-list-entry>
+      <a
+        [routerLink]="['/product']"
+        [queryParams]="{ id: product.id }"
+        class="product-list-entry-link"
+        ><app-product-list-entry [product]="product"></app-product-list-entry
+      ></a>
     }
   </ul>
 </div>

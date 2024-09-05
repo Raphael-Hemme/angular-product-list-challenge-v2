@@ -5,23 +5,18 @@ import { ProductDetailsPageComponent } from './products/pages/product-details-pa
 
 export const routes: Routes = [
   {
-    path: 'products/:page',
+    path: 'products',
     title: 'Products',
     component: ProductListPageComponent,
   },
   {
-    path: 'product/:id',
+    path: 'product',
     title: 'Product Details',
     component: ProductDetailsPageComponent,
   },
   {
-    path: 'products',
-    redirectTo: 'products/1',
-    pathMatch: 'full',
-  },
-  {
     path: '',
-    redirectTo: '/products/1',
+    redirectTo: '/products',
     pathMatch: 'full',
   },
   {

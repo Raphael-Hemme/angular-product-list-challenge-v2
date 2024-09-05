@@ -8,7 +8,6 @@ export type PageIdentifier = 'PRODUCT_LIST' | 'PRODUCT_DETAILS' | 'NOT_FOUND';
 export class HeaderService {
   public currRoute = signal<string>('');
   public pageIdentifier = computed<PageIdentifier>(() => {
-    console.log('currRoute: ', this.currRoute());
     if (this.currRoute() === '/' || this.currRoute().includes('products')) {
       return 'PRODUCT_LIST';
     } else if (this.currRoute().includes('product')) {
@@ -19,7 +18,6 @@ export class HeaderService {
   });
 
   public pageTitle = computed<string>(() => {
-    console.log('pageIdentifier: ', this.pageIdentifier());
     switch (this.pageIdentifier()) {
       case 'PRODUCT_LIST':
         return 'Product List';
