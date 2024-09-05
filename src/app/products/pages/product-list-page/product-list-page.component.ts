@@ -8,7 +8,8 @@ import {
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { ProductListEntryData } from '../../../core/services/api/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
+import { HeaderService } from '../../../core/services/header/header.service';
 
 @Component({
   selector: 'app-product-list-page',
@@ -24,10 +25,12 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   public page = signal<number>(1);
 
   private routeSub = new Subscription();
+  private defaultPage = 1;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private headerService: HeaderService,
   ) {}
 
   ngOnInit() {
@@ -55,22 +58,29 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
     ]);
 
     this.routeSub.add(
-      this.route.queryParams.subscribe((params) => {
-        if (params['page']) {
-          this.page.set(+params['page']);
-        } else {
-          // Navigate to the same route with the default query parameter
-          this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: { page: 1 },
-            queryParamsHandling: 'merge', // Preserve other existing query params
-          });
-        }
-      }),
+      this.route.queryParams
+        .pipe(
+          tap((params) => {
+            if (params['page']) {
+              this.page.set(+params['page']);
+            } else {
+              this.redirectToProductListWithQueryParams();
+            }
+          }),
+          tap(() => this.headerService.pageTitle.set('Product List')),
+        )
+        .subscribe(),
     );
   }
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
+  }
+
+  private redirectToProductListWithQueryParams() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: this.defaultPage },
+    });
   }
 }

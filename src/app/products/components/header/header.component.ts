@@ -15,12 +15,10 @@ export class HeaderComponent {
   public pageTitle!: Signal<string>;
   public hasSearchInput!: Signal<boolean>;
   public hasPagination!: Signal<boolean>;
-  public productDetailsTitle!: Signal<null | string>;
 
   constructor(private headerService: HeaderService) {
     this.pageTitle = this.headerService.pageTitle;
     this.hasSearchInput = this.headerService.hasSearchInput;
     this.hasPagination = this.headerService.hasPagination;
-    this.productDetailsTitle = this.headerService.productDetailsTitle;
   }
 }
