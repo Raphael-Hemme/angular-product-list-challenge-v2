@@ -2,6 +2,11 @@ import { computed, Injectable, signal } from '@angular/core';
 import { ApiService, ProductListEntryData } from '../api/api.service';
 import { filter, take, tap } from 'rxjs';
 
+enum DIRECTION {
+  FORWARD = 1,
+  BACKWARD = -1,
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,7 +22,7 @@ export class ProductListService {
 
   public addNewProductBatchToCache(
     isInitialFetch: boolean = false,
-    direction: -1 | 1 = 1,
+    direction: DIRECTION = DIRECTION.FORWARD,
   ): void {
     const currPageToUse = isInitialFetch
       ? 1
@@ -46,7 +51,7 @@ export class ProductListService {
     if (this.currPageNumber() < this.productListPagedCache().length) {
       this.addNewProductBatchToCache(false, 1);
     } else {
-      this.currPageNumber.update((currPage) => currPage + 1);
+      this.currPageNumber.update((currPage) => DIRECTION.FORWARD);
     }
   }
 
@@ -55,7 +60,7 @@ export class ProductListService {
       this.currPageNumber() > 1 &&
       this.productListPagedCache().length < this.currPageNumber()
     ) {
-      this.addNewProductBatchToCache(false, -1);
+      this.addNewProductBatchToCache(false, DIRECTION.BACKWARD);
     } else {
       this.currPageNumber.update((currPage) => currPage - 1);
     }
