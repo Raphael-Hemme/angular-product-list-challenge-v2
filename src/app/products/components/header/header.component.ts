@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { SearchFormComponent } from '../search-form/search-form.component';
 import { HeaderService } from '../../../core/services/header/header.service';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SearchFormComponent],
+  imports: [SearchFormComponent, PaginatorComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

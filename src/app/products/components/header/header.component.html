@@ -1,9 +1,10 @@
 <header class="header-container">
   <div class="heading-and-search-warpper">
     <h1 class="page-heading">{{ pageTitle() }}</h1>
+    <p>{{ pageTitle() }} -> {{ hasPagination() }} and {{ hasSearchInput() }}</p>
     @if (hasPagination() && hasSearchInput()) {
       <app-search-form></app-search-form>
-      <!-- Todo: Add pagination -->
+      <app-paginator></app-paginator>
     }
   </div>
 </header>

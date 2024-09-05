@@ -48,7 +48,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
               this.redirectToProductListWithQueryParams();
             }
           }),
-          tap(() => this.headerService.pageTitle.set('Product List')),
+          tap(() => this.headerService.pageTitle.set('product list')),
         )
         .subscribe(),
     );

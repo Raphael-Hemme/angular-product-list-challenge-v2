@@ -37,7 +37,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
           // Todo: call product service to get product details (indirectly via cache or via API call) in switchMap then use product.title in the next tap.
           tap((params) => {
             this.headerService.pageTitle.set(
-              'Product Details: ' + params['id'],
+              'product details: ' + params['id'],
             );
           }),
         )
