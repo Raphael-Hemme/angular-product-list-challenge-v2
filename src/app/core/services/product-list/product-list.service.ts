@@ -13,9 +13,7 @@ export class ProductListService {
   });
   public retrievalError = signal<string | null>(null);
 
-  constructor(private apiService: ApiService) {
-    this.loadInitialProductList();
-  }
+  constructor(private apiService: ApiService) {}
 
   public addNewProductBatchToCache(
     isInitialFetch: boolean = false,
@@ -38,7 +36,6 @@ export class ProductListService {
           });
           this.retrievalError.set(newBatch.error);
         }),
-        tap(() => console.log('test2: ', this.productListPagedCache())),
         filter((newBatch) => !!newBatch.error),
         tap(() => this.currPageNumber.set(currPageToUse)),
       )
