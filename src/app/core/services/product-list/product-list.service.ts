@@ -2,71 +2,65 @@ import { computed, Injectable, signal } from '@angular/core';
 import { ApiService, ProductListEntryData } from '../api/api.service';
 import { filter, take, tap } from 'rxjs';
 
-enum DIRECTION {
-  FORWARD = 1,
-  BACKWARD = -1,
-}
+export const PRODUCT_LIST_PAGE_SIZE = 20;
+export const TOTAL_REGULAR_LIST_LENGTH = 200;
+export const TOTAL_REGULAR_PAGES =
+  TOTAL_REGULAR_LIST_LENGTH / PRODUCT_LIST_PAGE_SIZE;
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductListService {
-  public productListPagedCache = signal<ProductListEntryData[][]>([]);
-  public currPageNumber = signal<number>(1);
+  public listMode = signal<'REGULAR' | 'SEARCH'>('REGULAR');
+
+  // Data for the regular product list
+  public currRegularPageNumber = signal<number>(1);
+
+  public productListPagedCache = signal<ProductListEntryData[][]>(
+    this.generateInitiallyEmptyProductListCache(),
+  );
+
   public currDisplayedProductList = computed<ProductListEntryData[]>(() => {
-    return this.productListPagedCache()[this.currPageNumber() - 1] || [];
+    return this.productListPagedCache()[this.currRegularPageNumber() - 1];
   });
+
   public retrievalError = signal<string | null>(null);
+
+  // Data for the search results
+  public searchResults = signal<ProductListEntryData[]>([]);
 
   constructor(private apiService: ApiService) {}
 
-  public addNewProductBatchToCache(
-    isInitialFetch: boolean = false,
-    direction: DIRECTION = DIRECTION.FORWARD,
-  ): void {
-    const currPageToUse = isInitialFetch
-      ? 1
-      : this.currPageNumber() + direction;
+  private generateInitiallyEmptyProductListCache(): ProductListEntryData[][] {
+    return Array.from({ length: TOTAL_REGULAR_PAGES }, () => []);
+  }
+
+  private addNewProductBatchToCache(forPageNumber: number): void {
+    const insertIndex = forPageNumber - 1;
+
     this.apiService
-      .getProductListBatch(currPageToUse)
+      .getProductListBatch(forPageNumber)
       .pipe(
         take(1),
         tap((newBatch) => {
           this.productListPagedCache.update((cache) => {
-            if (direction === 1) {
-              return [...cache, newBatch.products];
-            } else {
-              return [newBatch.products, ...cache];
-            }
+            const newCacheState = [...cache];
+            newCacheState[insertIndex] = newBatch.products;
+            return newCacheState;
           });
           this.retrievalError.set(newBatch.error);
         }),
-        filter((newBatch) => !!newBatch.error),
-        tap(() => this.currPageNumber.set(currPageToUse)),
+        filter((newBatch) => !!!newBatch.error),
+        tap(() => this.currRegularPageNumber.set(forPageNumber)),
       )
       .subscribe();
   }
 
-  public loadNextPage(): void {
-    if (this.currPageNumber() < this.productListPagedCache().length) {
-      this.addNewProductBatchToCache(false, 1);
+  public loadPage(pageNumber: number): void {
+    if (this.productListPagedCache()[pageNumber - 1].length === 0) {
+      this.addNewProductBatchToCache(pageNumber);
     } else {
-      this.currPageNumber.update((currPage) => DIRECTION.FORWARD);
+      this.currRegularPageNumber.set(pageNumber);
     }
-  }
-
-  public loadPrevPage(): void {
-    if (
-      this.currPageNumber() > 1 &&
-      this.productListPagedCache().length < this.currPageNumber()
-    ) {
-      this.addNewProductBatchToCache(false, DIRECTION.BACKWARD);
-    } else {
-      this.currPageNumber.update((currPage) => currPage - 1);
-    }
-  }
-
-  public loadInitialProductList(): void {
-    this.addNewProductBatchToCache(true);
   }
 }

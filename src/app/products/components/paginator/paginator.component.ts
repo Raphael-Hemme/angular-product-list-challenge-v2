@@ -1,6 +1,10 @@
 import { Component, computed, Signal, WritableSignal } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { ProductListService } from '../../../core/services/product-list/product-list.service';
+import {
+  PRODUCT_LIST_PAGE_SIZE,
+  ProductListService,
+  TOTAL_REGULAR_LIST_LENGTH,
+} from '../../../core/services/product-list/product-list.service';
 
 @Component({
   selector: 'app-paginator',
@@ -10,18 +14,19 @@ import { ProductListService } from '../../../core/services/product-list/product-
   styleUrl: './paginator.component.scss',
 })
 export class PaginatorComponent {
-  public length = 100;
-  public pageSize = 20;
+  public length = TOTAL_REGULAR_LIST_LENGTH;
+  public pageSize = PRODUCT_LIST_PAGE_SIZE;
   public disabled = false;
   public pageIndex!: Signal<number>;
 
   constructor(private productListServece: ProductListService) {
     this.pageIndex = computed(
-      () => this.productListServece.currPageNumber() - 1,
+      () => this.productListServece.currRegularPageNumber() - 1,
     );
   }
 
   public handlePageEvent(event: PageEvent): void {
     console.log(event);
+    this.productListServece.loadPage(event.pageIndex + 1);
   }
 }

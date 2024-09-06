@@ -22,7 +22,7 @@ import { ProductListService } from '../../../core/services/product-list/product-
   styleUrl: './product-list-page.component.scss',
 })
 export class ProductListPageComponent implements OnInit, OnDestroy {
-  public page = signal<number>(1);
+  public pageNumber = signal<number>(1);
   public currProductList!: Signal<ProductListEntryData[]>;
 
   private routeSub = new Subscription();
@@ -43,7 +43,8 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
         .pipe(
           tap((params) => {
             if (params['page']) {
-              this.page.set(+params['page']);
+              this.pageNumber.set(+params['page']);
+              this.productListServece.loadPage(this.pageNumber());
             } else {
               this.redirectToProductListWithQueryParams();
             }
@@ -52,8 +53,6 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
         )
         .subscribe(),
     );
-
-    this.productListServece.loadInitialProductList();
   }
 
   ngOnDestroy() {
