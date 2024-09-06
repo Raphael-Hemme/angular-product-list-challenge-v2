@@ -11,7 +11,10 @@ import { ProductListEntryData } from '../../../core/services/api/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 import { HeaderService } from '../../../core/services/header/header.service';
-import { ProductListService } from '../../../core/services/product-list/product-list.service';
+import {
+  ProductListService,
+  TOTAL_REGULAR_PAGES,
+} from '../../../core/services/product-list/product-list.service';
 
 @Component({
   selector: 'app-product-list-page',
@@ -42,11 +45,13 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
       this.route.queryParams
         .pipe(
           tap((params) => {
-            if (params['page']) {
+            if (params['page'] && this.pageNumberIsValid(+params['page'])) {
               this.pageNumber.set(+params['page']);
               this.productListServece.loadPage(this.pageNumber());
-            } else {
+            } else if (!params['page']) {
               this.redirectToProductListWithQueryParams();
+            } else {
+              this.router.navigate(['/404']);
             }
           }),
           tap(() => this.headerService.pageTitle.set('product list')),
@@ -64,5 +69,9 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
       relativeTo: this.route,
       queryParams: { page: this.defaultPage },
     });
+  }
+
+  private pageNumberIsValid(pageNumber: number): boolean {
+    return pageNumber > 0 && pageNumber <= TOTAL_REGULAR_PAGES;
   }
 }

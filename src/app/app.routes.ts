@@ -20,6 +20,11 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: '404',
+    title: 'Not Found',
+    component: NotFoundPageComponent,
+  },
+  {
     path: '**',
     title: 'Not Found',
     component: NotFoundPageComponent,

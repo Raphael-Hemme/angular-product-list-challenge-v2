@@ -26,7 +26,9 @@ export class PaginatorComponent {
   }
 
   public handlePageEvent(event: PageEvent): void {
-    console.log(event);
+    if (event.pageIndex <= 0 || event.pageIndex >= TOTAL_REGULAR_LIST_LENGTH) {
+      return;
+    }
     this.productListServece.loadPage(event.pageIndex + 1);
   }
 }
