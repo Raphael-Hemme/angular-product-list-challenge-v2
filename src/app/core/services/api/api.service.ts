@@ -15,23 +15,47 @@ export type ProductListResponse = {
   error: string | null;
 };
 
+export type ProductDetailsData = {
+  id: number;
+  title: string;
+  brand?: string;
+  price: number;
+  description: string;
+  thumbnail: string;
+  images: string[];
+  category: string;
+  tages: string[];
+  availabilityStatus: string;
+};
+
+export type ProductDetailsResponse = {
+  product: ProductDetailsData | null;
+  error: string | null;
+};
+
+export const BASE_URL = 'https://dummyjson.com/products';
+
+export const DEFAULT_PRODUCT_LIST_FIELD_SELECTION =
+  'id,title,brand,price,description,thumbnail';
+
+export const DEFAULT_PRODUCT_DETAILS_FIELD_SELECTION =
+  'id,title,brand,price,description,thumbnail,images,category,tags,availabilityStatus';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private baseUrl = 'https://dummyjson.com/products';
-  private defaultProductListFieldSelection =
-    'id,title,brand,price,description,thumbnail';
 
   constructor() {}
 
   public getProductListBatch(
     page: number,
     pageSize: number = 20,
-    fieldSelection: string = this.defaultProductListFieldSelection,
+    fieldSelection: string = DEFAULT_PRODUCT_LIST_FIELD_SELECTION,
   ): Observable<ProductListResponse> {
     const start = (page - 1) * pageSize;
-    const url = `${this.baseUrl}?limit=${pageSize}&skip=${start}&select=${fieldSelection}`;
+    const url = `${BASE_URL}?limit=${pageSize}&skip=${start}&select=${fieldSelection}`;
 
     const getFetchPromise = async (): Promise<ProductListResponse> => {
       try {
@@ -44,7 +68,6 @@ export class ApiService {
           );
         } else {
           const data = await response.json();
-          console.log(data);
           return {
             products: data.products,
             error: null,
@@ -53,6 +76,42 @@ export class ApiService {
       } catch (error) {
         return {
           products: [],
+          error: this.getErrorMessage(error),
+        };
+      }
+    };
+
+    return from(getFetchPromise());
+  }
+
+  public getProductDetails(
+    productId: number,
+    fieldSelection: string = DEFAULT_PRODUCT_DETAILS_FIELD_SELECTION,
+  ): Observable<ProductDetailsResponse> {
+    const url = `${BASE_URL}/${productId}?select=${fieldSelection}`;
+    console.log('getProductDetails url:', url);
+
+    const getFetchPromise = async (): Promise<ProductDetailsResponse> => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(
+            'Failed to fetch product details.' +
+              response.status +
+              response.statusText,
+          );
+        } else {
+          const data = await response.json();
+          console.log('data:', data);
+          return {
+            product: data,
+            error: null,
+          };
+        }
+      } catch (error) {
+        console.error('Error fetching product details:', error);
+        return {
+          product: null,
           error: this.getErrorMessage(error),
         };
       }
