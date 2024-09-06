@@ -4,8 +4,9 @@ import { from, Observable } from 'rxjs';
 export type ProductListEntryData = {
   id: number;
   title: string;
-  brand: string;
+  brand?: string;
   price: number;
+  description: string;
   thumbnail: string;
 };
 
@@ -19,7 +20,8 @@ export type ProductListResponse = {
 })
 export class ApiService {
   private baseUrl = 'https://dummyjson.com/products';
-  private defaultProductListFieldSelection = 'id,title,brand,price,thumbnail';
+  private defaultProductListFieldSelection =
+    'id,title,brand,price,description,thumbnail';
 
   constructor() {}
 
@@ -42,6 +44,7 @@ export class ApiService {
           );
         } else {
           const data = await response.json();
+          console.log(data);
           return {
             products: data.products,
             error: null,

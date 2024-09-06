@@ -13,4 +13,6 @@ import { ProductListEntryData } from '../../../core/services/api/api.service';
 })
 export class ProductListEntryComponent {
   @Input() product!: ProductListEntryData;
+
+  public readonly productDescriptionCutOff = 80;
 }
