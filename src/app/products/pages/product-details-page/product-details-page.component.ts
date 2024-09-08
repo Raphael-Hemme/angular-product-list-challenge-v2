@@ -6,12 +6,13 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subscription, tap } from 'rxjs';
 import { HeaderService } from '../../../core/services/header/header.service';
 import { ProductDetailsService } from '../../../core/services/product-details/product-details.service';
 import { ProductDetailsData } from '../../../core/services/api/api.service';
 import { JsonPipe } from '@angular/common';
+import { ProductListService } from '../../../core/services/product-list/product-list.service';
 
 @Component({
   selector: 'app-product-details-page',
@@ -24,15 +25,19 @@ import { JsonPipe } from '@angular/common';
 export class ProductDetailsPageComponent implements OnInit, OnDestroy {
   public productId = signal<number | null>(null);
   public productDetails!: WritableSignal<ProductDetailsData | null>;
+  private currRegularPageNumber!: WritableSignal<number>; // Get it for easyly navigating back to the list page with correct page number or default
 
   private routeSub = new Subscription();
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly headerService: HeaderService,
-    private readonly productService: ProductDetailsService,
+    private readonly productDetailsService: ProductDetailsService,
+    private readonly productListService: ProductListService,
   ) {
-    this.productDetails = this.productService.displayedProductDetails;
+    this.productDetails = this.productDetailsService.displayedProductDetails;
+    this.currRegularPageNumber = this.productListService.currRegularPageNumber;
   }
 
   ngOnInit(): void {
@@ -46,7 +51,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
           // Todo: call product service to get product details (indirectly via cache or via API call) in switchMap then use product.title in the next tap.
           tap((productId) => {
             if (productId) {
-              this.productService.loadProductDetails(productId);
+              this.productDetailsService.loadProductDetails(productId);
             }
           }),
           tap(() => this.headerService.pageTitle.set('product details')),
@@ -60,5 +65,11 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
+  }
+
+  public navigateBack(): void {
+    this.router.navigate(['/products'], {
+      queryParams: { page: this.currRegularPageNumber() },
+    });
   }
 }

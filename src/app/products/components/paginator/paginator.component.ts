@@ -5,6 +5,7 @@ import {
   ProductListService,
   TOTAL_REGULAR_LIST_LENGTH,
 } from '../../../core/services/product-list/product-list.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-paginator',
@@ -19,16 +20,21 @@ export class PaginatorComponent {
   public disabled = false;
   public pageIndex!: Signal<number>;
 
-  constructor(private productListServece: ProductListService) {
+  constructor(
+    private productListServece: ProductListService,
+    private readonly router: Router,
+  ) {
     this.pageIndex = computed(
       () => this.productListServece.currRegularPageNumber() - 1,
     );
   }
 
   public handlePageEvent(event: PageEvent): void {
-    if (event.pageIndex <= 0 || event.pageIndex >= TOTAL_REGULAR_LIST_LENGTH) {
+    if (event.pageIndex < 0 || event.pageIndex >= TOTAL_REGULAR_LIST_LENGTH) {
       return;
     }
-    this.productListServece.loadPage(event.pageIndex + 1);
+    this.router.navigate(['/products'], {
+      queryParams: { page: event.pageIndex + 1 },
+    });
   }
 }
