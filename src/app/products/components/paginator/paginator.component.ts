@@ -1,4 +1,4 @@
-import { Component, computed, Signal, WritableSignal } from '@angular/core';
+import { Component, computed, Signal } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import {
   PRODUCT_LIST_PAGE_SIZE,

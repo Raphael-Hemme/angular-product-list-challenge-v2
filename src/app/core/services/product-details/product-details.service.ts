@@ -30,24 +30,19 @@ export class ProductDetailsService {
         tap((productDetailsResponse) =>
           this.displayedProductDetails.set(productDetailsResponse.product),
         ),
+        tap(() => console.log(this.productDetailsCache())), // Todo: remove dev logging
       )
       .subscribe();
   }
 
   public loadProductDetails(productId: number): void {
-    console.log(
-      'loadProductDetails loading product details for id:',
-      productId,
-    );
     const cachedProduct = this.productDetailsCache().filter(
       (product) => product.id === productId,
     )[0];
     if (cachedProduct) {
-      console.log('this');
       this.displayedProductDetails.set(cachedProduct);
     } else {
-      console.log('that');
-      return this.addNewProductDetailsToCache(productId);
+      this.addNewProductDetailsToCache(productId);
     }
   }
 }

@@ -45,8 +45,6 @@ export const DEFAULT_PRODUCT_DETAILS_FIELD_SELECTION =
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'https://dummyjson.com/products';
-
   constructor() {}
 
   public getProductListBatch(
@@ -89,7 +87,6 @@ export class ApiService {
     fieldSelection: string = DEFAULT_PRODUCT_DETAILS_FIELD_SELECTION,
   ): Observable<ProductDetailsResponse> {
     const url = `${BASE_URL}/${productId}?select=${fieldSelection}`;
-    console.log('getProductDetails url:', url);
 
     const getFetchPromise = async (): Promise<ProductDetailsResponse> => {
       try {
@@ -102,7 +99,6 @@ export class ApiService {
           );
         } else {
           const data = await response.json();
-          console.log('data:', data);
           return {
             product: data,
             error: null,
@@ -128,7 +124,9 @@ export class ApiService {
    * @returns
    */
   public getErrorMessage(error: unknown) {
-    if (error instanceof Error) return error.message;
+    if (error instanceof Error) {
+      return error.message;
+    }
     return String(error);
   }
 }
