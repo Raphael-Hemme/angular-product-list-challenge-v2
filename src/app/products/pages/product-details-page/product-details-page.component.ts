@@ -11,14 +11,15 @@ import { map, Subscription, tap } from 'rxjs';
 import { HeaderService } from '../../../core/services/header/header.service';
 import { ProductDetailsService } from '../../../core/services/product-details/product-details.service';
 import { ProductDetailsData } from '../../../core/services/api/api.service';
-import { JsonPipe } from '@angular/common';
 import { ProductListService } from '../../../core/services/product-list/product-list.service';
+import { MatChip } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-details-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [JsonPipe],
+  imports: [MatChip, MatButtonModule],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss',
 })

@@ -24,7 +24,7 @@ export type ProductDetailsData = {
   thumbnail: string;
   images: string[];
   category: string;
-  tages: string[];
+  tags: string[];
   availabilityStatus: string;
 };
 
