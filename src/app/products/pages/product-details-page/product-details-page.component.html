@@ -1,12 +1,18 @@
 <button class="back-btn" (click)="navigateBack()" mat-flat-button>back</button>
 
 <section class="product-details-container">
-  <h2 class="product-details-brand">{{ productDetails()?.brand }}</h2>
-  <h3 class="product-details-title">{{ productDetails()?.title }}</h3>
+  <h2 class="product-details-brand">
+    {{ productDetails()?.brand ?? 'No brand' }}
+  </h2>
+  <h3 class="product-details-title">
+    {{ productDetails()?.title ?? 'No title' }}
+  </h3>
   <div class="product-details-price-and-status-container">
-    <p class="product-details-price">${{ productDetails()?.price }}</p>
+    <p class="product-details-price">
+      ${{ productDetails()?.price ?? 'Priceless ;)' }}
+    </p>
     <p class="product-details-status">
-      {{ productDetails()?.availabilityStatus }}
+      {{ productDetails()?.availabilityStatus ?? 'Availability unknown' }}
     </p>
   </div>
 
@@ -20,11 +26,11 @@
   <div class="various-details-container">
     <h4>Tags</h4>
     <ul class="product-details-tag-list">
-      @for (tag of productDetails()?.tags; track tag) {
+      @for (tag of productDetails()?.tags ?? []; track tag) {
         <mat-chip class="product-details-tag">{{ tag }}</mat-chip>
       }
     </ul>
     <h4>Description</h4>
-    <p>{{ productDetails()?.description }}</p>
+    <p>{{ productDetails()?.description ?? 'No description' }}</p>
   </div>
 </section>
