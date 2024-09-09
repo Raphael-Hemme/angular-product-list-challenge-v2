@@ -27,8 +27,4 @@ export class HeaderComponent {
     this.hasSearchInput = this.headerService.hasSearchInput;
     this.hasPagination = this.headerService.hasPagination;
   }
-
-  public navigateBackToProductListPage(): void {
-    this.navigationService.navigateBackToProductListPage();
-  }
 }

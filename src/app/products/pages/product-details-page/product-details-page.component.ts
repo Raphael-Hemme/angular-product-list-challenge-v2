@@ -53,4 +53,8 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.productIdQueryParamSub.unsubscribe();
   }
+
+  public navigateBackToProductListPage(): void {
+    this.navigationService.navigateBackToProductListPage();
+  }
 }

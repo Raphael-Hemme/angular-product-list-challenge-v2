@@ -1,1 +1,9 @@
-<app-product-details [productDetails]="productDetails"></app-product-details>
+<app-product-details [productDetails]="productDetails">
+  <button
+    class="back-btn"
+    (click)="navigateBackToProductListPage()"
+    mat-flat-button
+  >
+    back
+  </button>
+</app-product-details>

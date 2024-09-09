@@ -1,10 +1,16 @@
 <section class="product-details-container">
+  <div class="back-btn-wrapper">
+    <ng-content></ng-content>
+  </div>
+
   <h2 class="product-details-brand">
     {{ productDetails()?.brand ?? 'No brand' }}
   </h2>
+
   <h3 class="product-details-title">
     {{ productDetails()?.title ?? 'No title' }}
   </h3>
+
   <div class="product-details-price-and-status-container">
     <p class="product-details-price">
       ${{ productDetails()?.price ?? 'Priceless ;)' }}
@@ -28,6 +34,7 @@
         <mat-chip class="product-details-tag">{{ tag }}</mat-chip>
       }
     </ul>
+
     <h4>Description</h4>
     <p>{{ productDetails()?.description ?? 'No description' }}</p>
   </div>

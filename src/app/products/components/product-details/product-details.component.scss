@@ -9,14 +9,40 @@ h3 {
   padding: $padding-s 0;
   display: grid;
   width: 100%;
-  height: 75vh;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 60px 60px 1fr;
+  height: 100%;
+  grid-template-columns: 1fr;
+  /* prettier-ignore */
+  grid-template-rows: minmax(40px, max-content) minmax(60px, max-content) minmax(60px, max-content) 0.5fr 4fr minmax(60px, max-content);
   grid-template-areas:
-    'brand .'
-    'title price-and-status'
-    'image various-details';
+    'back-btn'
+    'brand'
+    'title'
+    'price-and-status'
+    'image'
+    'various-details';
   gap: $gap-s;
+
+  @media (min-width: 1025px) {
+    height: 100vh;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: minmax(60px, max-content) minmax(60px, max-content) 1fr;
+    grid-template-areas:
+      'brand back-btn'
+      'title price-and-status'
+      'image various-details';
+    gap: $gap-s;
+  }
+
+  .back-btn-wrapper {
+    grid-area: back-btn;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .back-btn {
+      text-transform: uppercase;
+    }
+  }
 
   .product-details-brand {
     grid-area: brand;
