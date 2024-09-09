@@ -14,12 +14,13 @@ import { ProductDetailsData } from '../../../core/services/api/api.service';
 import { ProductListService } from '../../../core/services/product-list/product-list.service';
 import { MatChip } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
+import { ProductDetailsComponent } from '../../components/product-details/product-details.component';
 
 @Component({
   selector: 'app-product-details-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatChip, MatButtonModule],
+  imports: [MatButtonModule, ProductDetailsComponent],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss',
 })

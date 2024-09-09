@@ -1,36 +1,3 @@
 <button class="back-btn" (click)="navigateBack()" mat-flat-button>back</button>
 
-<section class="product-details-container">
-  <h2 class="product-details-brand">
-    {{ productDetails()?.brand ?? 'No brand' }}
-  </h2>
-  <h3 class="product-details-title">
-    {{ productDetails()?.title ?? 'No title' }}
-  </h3>
-  <div class="product-details-price-and-status-container">
-    <p class="product-details-price">
-      ${{ productDetails()?.price ?? 'Priceless ;)' }}
-    </p>
-    <p class="product-details-status">
-      {{ productDetails()?.availabilityStatus ?? 'Availability unknown' }}
-    </p>
-  </div>
-
-  <div class="product-details-image-wapper">
-    <img
-      [src]="productDetails()?.images?.[0]"
-      [alt]="productDetails()?.title"
-    />
-  </div>
-
-  <div class="various-details-container">
-    <h4>Tags</h4>
-    <ul class="product-details-tag-list">
-      @for (tag of productDetails()?.tags ?? []; track tag) {
-        <mat-chip class="product-details-tag">{{ tag }}</mat-chip>
-      }
-    </ul>
-    <h4>Description</h4>
-    <p>{{ productDetails()?.description ?? 'No description' }}</p>
-  </div>
-</section>
+<app-product-details [productDetails]="productDetails"></app-product-details>
