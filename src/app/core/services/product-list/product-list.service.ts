@@ -8,16 +8,16 @@ export const TOTAL_REGULAR_PAGES =
   TOTAL_REGULAR_LIST_LENGTH / PRODUCT_LIST_PAGE_SIZE;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProductListService {
   public listMode = signal<'REGULAR' | 'SEARCH'>('REGULAR');
 
-  // Data for the regular product list
+  /* Data for the regular product list */
   public currRegularPageNumber = signal<number>(1);
 
   public productListPagedCache = signal<ProductListEntryData[][]>(
-    this.generateInitiallyEmptyProductListCache(),
+    this.generateInitiallyEmptyProductListCache()
   );
 
   public currDisplayedProductList = computed<ProductListEntryData[]>(() => {
@@ -26,7 +26,7 @@ export class ProductListService {
 
   public retrievalError = signal<string | null>(null);
 
-  // Data for the search results
+  /* Data for the search results */
   public searchResults = signal<ProductListEntryData[]>([]);
 
   constructor(private apiService: ApiService) {}
@@ -51,7 +51,7 @@ export class ProductListService {
           this.retrievalError.set(newBatch.error);
         }),
         filter((newBatch) => !!!newBatch.error),
-        tap(() => this.currRegularPageNumber.set(forPageNumber)),
+        tap(() => this.currRegularPageNumber.set(forPageNumber))
       )
       .subscribe();
   }

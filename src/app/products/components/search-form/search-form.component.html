@@ -1,1 +1,22 @@
-<p>search-form works!</p>
+<form [formGroup]="searchForm">
+  <mat-form-field class="example-form-field">
+    <mat-label for="search">Search: </mat-label>
+    <input
+      matInput
+      id="search"
+      type="search"
+      formControlName="search"
+      placeholder="Search for products"
+    />
+    @if (searchForm.get('search')?.value) {
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="clearSearch()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+</form>
