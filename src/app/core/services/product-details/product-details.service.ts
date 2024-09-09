@@ -24,13 +24,11 @@ export class ProductDetailsService {
             this.productDetailsCache.update((cache) => [...cache, newDetails]);
           }
           this.retrievalError.set(productDetailsResponse.error);
-          console.log('productDetailsResponse: ', productDetailsResponse);
         }),
         filter((productDetailsResponse) => !!!productDetailsResponse.error),
         tap((productDetailsResponse) =>
           this.displayedProductDetails.set(productDetailsResponse.product)
-        ),
-        tap(() => console.log(this.productDetailsCache())) // Todo: remove dev logging
+        )
       )
       .subscribe();
   }
