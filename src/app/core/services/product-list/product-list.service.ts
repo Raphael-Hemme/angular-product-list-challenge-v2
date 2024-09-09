@@ -21,7 +21,13 @@ export class ProductListService {
   );
 
   public currDisplayedProductList = computed<ProductListEntryData[]>(() => {
-    return this.productListPagedCache()[this.currRegularPageNumber() - 1];
+    if (this.listMode() === 'SEARCH') {
+      console.log('displaying searchResults', this.searchResults());
+      return this.searchResults();
+    } else {
+      console.log('displaying regular paginated list');
+      return this.productListPagedCache()[this.currRegularPageNumber() - 1];
+    }
   });
 
   public retrievalError = signal<string | null>(null);
@@ -62,5 +68,26 @@ export class ProductListService {
     } else {
       this.currRegularPageNumber.set(pageNumber);
     }
+  }
+
+  public searchProducts(searchTerm: string): void {
+    this.apiService
+      .searchProducts(searchTerm)
+      .pipe(
+        take(1),
+        tap((searchResults) => console.log(searchResults)),
+        tap((searchResults) => {
+          this.listMode.set('SEARCH');
+          this.searchResults.set(searchResults.products);
+          this.retrievalError.set(searchResults.error);
+        })
+      )
+      .subscribe();
+  }
+
+  public clearSearchResults(): void {
+    this.searchResults.set([]);
+    this.retrievalError.set(null);
+    this.listMode.set('REGULAR');
   }
 }
