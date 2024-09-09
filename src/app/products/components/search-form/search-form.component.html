@@ -1,22 +1,27 @@
-<form [formGroup]="searchForm">
-  <mat-form-field class="example-form-field">
-    <mat-label for="search">Search: </mat-label>
+<div class="search-form-container">
+  <form [formGroup]="searchForm">
+    <label for="search">Search: </label>
     <input
       matInput
       id="search"
+      class="search-input"
       type="search"
       formControlName="search"
       placeholder="Search for products"
+      aria-label="Search"
     />
-    @if (searchForm.get('search')?.value) {
-      <button
-        matSuffix
-        mat-icon-button
-        aria-label="Clear"
-        (click)="clearSearch()"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-    }
-  </mat-form-field>
-</form>
+
+    <button
+      [ngClass]="
+        searchForm.get('search')?.value
+          ? 'clear-btn-visible'
+          : 'clear-btn-hidden'
+      "
+      mat-icon-button
+      aria-label="Clear search"
+      (click)="clearSearch()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </form>
+</div>

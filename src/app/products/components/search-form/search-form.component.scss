@@ -1,0 +1,45 @@
+@import '../../../../styles/variables.scss';
+
+.search-form-container form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: $padding-xs 0;
+  gap: $gap-xs;
+
+  .search-input {
+    width: 100%;
+    padding: $padding-xs;
+    border-radius: $border-radius;
+    border: 1px solid $color-border;
+    font-size: 1rem;
+  }
+
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  .clear-btn-visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: calc(2 * #{$padding-xs});
+    right: $padding-xs;
+
+    @media (min-width: $breakpoint-m) {
+      top: calc(2 * #{$padding-xs} + 3px);
+      right: calc(50%);
+    }
+  }
+
+  .clear-btn-hidden {
+    display: none;
+  }
+}

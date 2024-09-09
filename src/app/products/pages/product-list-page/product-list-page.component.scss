@@ -12,6 +12,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
+  padding: $padding-xs 0;
 
   @media (min-width: $breakpoint-m) {
     width: calc(100% - 2 * $padding-l);
@@ -19,6 +20,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: $gap-s;
+
+    app-search-form,
+    app-paginator {
+      width: 50%;
+    }
   }
 }
 
