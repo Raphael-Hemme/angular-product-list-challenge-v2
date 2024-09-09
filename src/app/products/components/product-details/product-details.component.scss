@@ -15,7 +15,7 @@ button {
   height: 100%;
   grid-template-columns: 1fr;
   /* prettier-ignore */
-  grid-template-rows: minmax(40px, max-content) minmax(60px, max-content) minmax(60px, max-content) 0.5fr 4fr minmax(60px, max-content);
+  grid-template-rows: minmax(40px, max-content) minmax(60px, max-content) minmax(60px, max-content) minmax(40px, max-content) 4fr minmax(60px, max-content);
   grid-template-areas:
     'back-btn'
     'brand'
@@ -26,7 +26,7 @@ button {
   gap: $gap-s;
 
   @media (min-width: $breakpoint-m) {
-    height: 100vh;
+    height: calc(100vh - 2 * $padding-l);
     grid-template-columns: 2fr 1fr;
     grid-template-rows: minmax(60px, max-content) minmax(60px, max-content) 1fr;
     grid-template-areas:
@@ -64,6 +64,11 @@ button {
 
     .product-details-price {
       color: $color-success;
+      margin: 0;
+    }
+
+    .product-details-status {
+      margin: 0;
     }
   }
 
