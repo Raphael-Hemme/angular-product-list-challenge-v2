@@ -30,6 +30,18 @@ export class NavigationService {
     );
   }
 
+  public handleProductIdQueryParams(): Observable<number> {
+    return this.route.queryParams.pipe(
+      map((params: Params) => (params['id'] ? +params['id'] : null)),
+      tap((productId) => {
+        if (!productId) {
+          this.router.navigate(['/404']);
+        }
+      }),
+      filter((productId) => typeof productId === 'number')
+    );
+  }
+
   public navigateBackToProductListPage(): void {
     this.router.navigate(['/products'], {
       queryParams: { page: this.productListService.currRegularPageNumber() }
