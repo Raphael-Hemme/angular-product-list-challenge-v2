@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
   signal,
-  WritableSignal,
+  WritableSignal
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subscription, tap } from 'rxjs';
@@ -12,7 +12,6 @@ import { HeaderService } from '../../../core/services/header/header.service';
 import { ProductDetailsService } from '../../../core/services/product-details/product-details.service';
 import { ProductDetailsData } from '../../../core/services/api/api.service';
 import { ProductListService } from '../../../core/services/product-list/product-list.service';
-import { MatChip } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductDetailsComponent } from '../../components/product-details/product-details.component';
 
@@ -22,7 +21,7 @@ import { ProductDetailsComponent } from '../../components/product-details/produc
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, ProductDetailsComponent],
   templateUrl: './product-details-page.component.html',
-  styleUrl: './product-details-page.component.scss',
+  styleUrl: './product-details-page.component.scss'
 })
 export class ProductDetailsPageComponent implements OnInit, OnDestroy {
   public productId = signal<number | null>(null);
@@ -36,7 +35,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly headerService: HeaderService,
     private readonly productDetailsService: ProductDetailsService,
-    private readonly productListService: ProductListService,
+    private readonly productListService: ProductListService
   ) {
     this.productDetails = this.productDetailsService.displayedProductDetails;
     this.currRegularPageNumber = this.productListService.currRegularPageNumber;
@@ -59,19 +58,13 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
           tap(() => this.headerService.pageTitle.set('product details')),
           tap((productId) => {
             this.headerService.pageTitle.set('product details: ' + productId);
-          }),
+          })
         )
-        .subscribe(),
+        .subscribe()
     );
   }
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
-  }
-
-  public navigateBack(): void {
-    this.router.navigate(['/products'], {
-      queryParams: { page: this.currRegularPageNumber() },
-    });
   }
 }

@@ -24,7 +24,7 @@
   <div class="various-details-container">
     <h4>Tags</h4>
     <ul class="product-details-tag-list">
-      @for (tag of productDetails()?.tags ?? []; track tag) {
+      @for (tag of productDetails()?.tags ?? []; let idx = $index; track idx) {
         <mat-chip class="product-details-tag">{{ tag }}</mat-chip>
       }
     </ul>

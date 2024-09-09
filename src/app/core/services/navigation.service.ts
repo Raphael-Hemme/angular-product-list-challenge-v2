@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, Observable, tap } from 'rxjs';
-import { TOTAL_REGULAR_PAGES } from './product-list/product-list.service';
+import {
+  ProductListService,
+  TOTAL_REGULAR_PAGES
+} from './product-list/product-list.service';
 
 export const DEFAULT_PAGE_NUMBER = 1;
 
@@ -13,7 +16,8 @@ type MappedValuesForQueryParams = number | 'NOT_FOUND' | 'REDIRECT';
 export class NavigationService {
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly productListService: ProductListService
   ) {}
 
   public handlePageQueryParams(): Observable<number> {
@@ -24,6 +28,12 @@ export class NavigationService {
       tap((mappedValues) => this.handleSideEffectsForPageQueryParams(mappedValues)),
       filter((mappedValues) => typeof mappedValues === 'number')
     );
+  }
+
+  public navigateBackToProductListPage(): void {
+    this.router.navigate(['/products'], {
+      queryParams: { page: this.productListService.currRegularPageNumber() }
+    });
   }
 
   private handleSideEffectsForPageQueryParams(
