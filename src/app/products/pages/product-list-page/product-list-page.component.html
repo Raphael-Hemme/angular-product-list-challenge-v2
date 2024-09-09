@@ -1,7 +1,9 @@
 <section class="page-container">
-  <div class="paginator-and-search-container">
+  <div class="paginator-and-search-wrapper">
     <app-search-form></app-search-form>
     <app-paginator></app-paginator>
   </div>
-  <app-product-list [products]="currProductList"></app-product-list>
+  <div class="product-list-wrapper">
+    <app-product-list [products]="currProductList"></app-product-list>
+  </div>
 </section>

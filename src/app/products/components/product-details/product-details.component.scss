@@ -6,7 +6,6 @@ h3 {
 }
 
 .product-details-container {
-  padding: $padding-s 0;
   display: grid;
   width: 100%;
   height: 100%;
@@ -22,7 +21,7 @@ h3 {
     'various-details';
   gap: $gap-s;
 
-  @media (min-width: 1025px) {
+  @media (min-width: $breakpoint-m) {
     height: 100vh;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: minmax(60px, max-content) minmax(60px, max-content) 1fr;

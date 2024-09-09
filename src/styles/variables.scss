@@ -20,5 +20,16 @@ $color-white: #fff;
 $border-radius: 0.5rem;
 
 // Breakpoints
-$breakpoint-md: 769px;
+$breakpoint-m: 769px;
+$breakpoint-l: 1025px;
 $breakpoint-xl: 1201px;
+
+$product-list-header-height-s: 50px;
+$product-list-header-height-l: 100px;
+
+$product-list-page-margin-top-s: calc(
+  #{$product-list-header-height-s} - #{$padding-l}
+);
+$product-list-page-margin-top-l: calc(
+  #{$product-list-header-height-l} - #{$padding-s}
+);

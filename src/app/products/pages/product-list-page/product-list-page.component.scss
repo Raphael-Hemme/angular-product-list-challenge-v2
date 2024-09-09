@@ -1,13 +1,31 @@
 @import '../../../../styles/variables.scss';
 
-.paginator-and-search-container {
+.paginator-and-search-wrapper {
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  background-color: $color-white;
+  width: calc(100% - 2 * $padding-s);
+  height: $product-list-header-height-l;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
 
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-m) {
+    width: calc(100% - 2 * $padding-l);
+    height: $product-list-header-height-s;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.product-list-wrapper {
+  margin: $product-list-page-margin-top-l 0 0 0;
+
+  @media (min-width: $breakpoint-m) {
+    margin: $product-list-page-margin-top-s 0 0 0;
   }
 }
