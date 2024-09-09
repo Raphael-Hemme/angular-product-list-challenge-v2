@@ -60,7 +60,8 @@ export class ApiService {
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(
-            'Failed to fetch product list.' +
+            'PRODUCT LIST ERROR: ' +
+              'Failed to fetch product list.' +
               response.status +
               response.statusText
           );
@@ -74,7 +75,7 @@ export class ApiService {
       } catch (error) {
         return {
           products: [],
-          error: this.getErrorMessage(error)
+          error: 'PRODUCT LIST ERROR: ' + this.getErrorMessage(error)
         };
       }
     };
@@ -93,7 +94,8 @@ export class ApiService {
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(
-            'Failed to fetch product details.' +
+            'PRODUCT DETAILS ERROR: ' +
+              'Failed to fetch product details.' +
               response.status +
               response.statusText
           );
@@ -108,7 +110,7 @@ export class ApiService {
         console.error('Error fetching product details:', error);
         return {
           product: null,
-          error: this.getErrorMessage(error)
+          error: 'PRODUCT DETAILS ERROR: ' + this.getErrorMessage(error)
         };
       }
     };
@@ -126,11 +128,7 @@ export class ApiService {
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(
-            'Failed to fetch search results.' +
-              response.status +
-              response.statusText
-          );
+          throw new Error('SEARCH ERROR: ' + 'Failed to fetch search results');
         } else {
           const data = await response.json();
           return {
@@ -139,9 +137,10 @@ export class ApiService {
           };
         }
       } catch (error) {
+        console.log('Error fetching search results:', error);
         return {
           products: [],
-          error: this.getErrorMessage(error)
+          error: 'SEARCH ERROR: ' + this.getErrorMessage(error)
         };
       }
     };
@@ -158,7 +157,7 @@ export class ApiService {
    */
   public getErrorMessage(error: unknown) {
     if (error instanceof Error) {
-      return error.message;
+      return error.message + `${error.cause ? ' ' + error.cause : ''}`;
     }
     return String(error);
   }

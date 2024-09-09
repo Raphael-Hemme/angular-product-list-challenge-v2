@@ -1,3 +1,5 @@
+@import '../../../../styles/variables.scss';
+
 .poduct-list-container {
   display: flex;
   flex-direction: column;
@@ -16,4 +18,15 @@
     color: unset;
     cursor: pointer;
   }
+}
+
+.product-list-error-container,
+.product-list-empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  width: 100%;
+  border-radius: $border-radius;
+  border: 5px dashed $color-warning;
 }

@@ -18,4 +18,5 @@ import { RouterLink } from '@angular/router';
 })
 export class ProductListComponent {
   @Input() products!: Signal<ProductListEntryData[]>;
+  @Input() errorMsg!: Signal<null | string>;
 }

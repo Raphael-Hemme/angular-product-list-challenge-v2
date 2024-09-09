@@ -25,6 +25,7 @@ import { PaginatorComponent } from '../../components/paginator/paginator.compone
 export class ProductListPageComponent implements OnInit, OnDestroy {
   public pageNumber = signal<number>(1);
   public currProductList!: Signal<ProductListEntryData[]>;
+  public errorMsg!: Signal<null | string>;
 
   private pageQueryParamsSub = new Subscription();
 
@@ -33,6 +34,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService
   ) {
     this.currProductList = this.productListServece.currDisplayedProductList;
+    this.errorMsg = this.productListServece.retrievalError;
   }
 
   ngOnInit() {

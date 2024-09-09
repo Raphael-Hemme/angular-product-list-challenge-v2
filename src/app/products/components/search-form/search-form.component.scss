@@ -30,12 +30,12 @@
     justify-content: center;
 
     position: absolute;
-    top: calc(2 * #{$padding-xs});
+    top: calc(2 * #{$padding-xs} - 2px);
     right: $padding-xs;
 
     @media (min-width: $breakpoint-m) {
       top: calc(2 * #{$padding-xs} + 3px);
-      right: calc(50%);
+      right: calc(50% + #{$padding-xs});
     }
   }
 
