@@ -1,4 +1,4 @@
-@import "styles/variables";
+@import 'styles/variables';
 
 * {
   box-sizing: border-box;
@@ -8,20 +8,8 @@
 html,
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
-
-/* Own global styles */
-/* header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  // padding: 0 1rem 0.5rem 1rem;
-
-  .page-heading {
-    margin: 0;
-  }
-} */
 
 main {
   width: 100%;

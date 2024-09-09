@@ -11,12 +11,14 @@ import { ProductListEntryData } from '../../../core/services/api/api.service';
 import { Subscription, tap } from 'rxjs';
 import { ProductListService } from '../../../core/services/product-list/product-list.service';
 import { NavigationService } from '../../../core/services/navigation.service';
+import { SearchFormComponent } from '../../components/search-form/search-form.component';
+import { PaginatorComponent } from '../../components/paginator/paginator.component';
 
 @Component({
   selector: 'app-product-list-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ProductListComponent],
+  imports: [ProductListComponent, SearchFormComponent, PaginatorComponent],
   templateUrl: './product-list-page.component.html',
   styleUrl: './product-list-page.component.scss'
 })

@@ -2,19 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  signal,
+  signal
 } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './products/components/header/header.component';
 import { filter, tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'angular-product-list';
@@ -29,7 +28,7 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        tap((event: NavigationEnd) => this.currRoute.set(event.url)),
+        tap((event: NavigationEnd) => this.currRoute.set(event.url))
       )
       .subscribe();
   }

@@ -7,7 +7,6 @@ import {
   WritableSignal
 } from '@angular/core';
 import { Subscription, tap } from 'rxjs';
-import { HeaderService } from '../../../core/services/header/header.service';
 import { ProductDetailsService } from '../../../core/services/product-details/product-details.service';
 import { ProductDetailsData } from '../../../core/services/api/api.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +28,6 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
   private productIdQueryParamSub = new Subscription();
 
   constructor(
-    private readonly headerService: HeaderService,
     private readonly productDetailsService: ProductDetailsService,
     private readonly navigationService: NavigationService
   ) {
@@ -42,9 +40,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         .handleProductIdQueryParams()
         .pipe(
           // prettier-ignore
-          tap((productId) => this.productDetailsService.loadProductDetails(productId)),
-          // prettier-ignore
-          tap(() => this.headerService.pageTitle.set('product details'))
+          tap((productId) => this.productDetailsService.loadProductDetails(productId))
         )
         .subscribe()
     );
