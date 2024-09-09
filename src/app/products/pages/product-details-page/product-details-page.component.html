@@ -1,4 +1,16 @@
-<app-product-details [productDetails]="productDetails">
+<app-product-details
+  [productDetails]="productDetails"
+  [retrievalError]="retrievalError"
+>
+  @if (retrievalError()) {
+    <button
+      mat-flat-button
+      (click)="retryLoadingProductDetails()"
+      [disabled]="didRetryLoading"
+    >
+      retry
+    </button>
+  }
   <button
     class="back-btn"
     (click)="navigateBackToProductListPage()"

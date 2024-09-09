@@ -24,6 +24,9 @@ import { NavigationService } from '../../../core/services/navigation/navigation.
 export class ProductDetailsPageComponent implements OnInit, OnDestroy {
   public productId = signal<number | null>(null);
   public productDetails!: WritableSignal<ProductDetailsData | null>;
+  public retrievalError!: WritableSignal<string | null>;
+
+  public didRetryLoading = false;
 
   private productIdQueryParamSub = new Subscription();
 
@@ -32,6 +35,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     private readonly navigationService: NavigationService
   ) {
     this.productDetails = this.productDetailsService.displayedProductDetails;
+    this.retrievalError = this.productDetailsService.retrievalError;
   }
 
   ngOnInit(): void {
@@ -39,6 +43,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
       this.navigationService
         .handleProductIdQueryParams()
         .pipe(
+          tap((productId) => this.productId.set(productId)),
           // prettier-ignore
           tap((productId) => this.productDetailsService.loadProductDetails(productId))
         )
@@ -52,5 +57,13 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
   public navigateBackToProductListPage(): void {
     this.navigationService.navigateBackToProductListPage();
+  }
+
+  public retryLoadingProductDetails(): void {
+    const productId = this.productId();
+    if (typeof productId === 'number' && !this.didRetryLoading) {
+      this.productDetailsService.loadProductDetails(productId);
+    }
+    this.didRetryLoading = true;
   }
 }

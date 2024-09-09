@@ -5,6 +5,10 @@ h3 {
   margin: 0;
 }
 
+button {
+  text-transform: uppercase;
+}
+
 .product-details-container {
   display: grid;
   width: 100%;
@@ -86,5 +90,16 @@ h3 {
       flex-wrap: wrap;
       gap: 0.5rem;
     }
+  }
+}
+
+.product-details-error {
+  font-size: 1rem;
+
+  .action-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $gap-s;
   }
 }
