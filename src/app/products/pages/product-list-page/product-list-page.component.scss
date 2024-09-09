@@ -1,5 +1,13 @@
+@import '../../../../styles/variables.scss';
+
 .paginator-and-search-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
