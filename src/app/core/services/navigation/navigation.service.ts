@@ -4,8 +4,8 @@ import { filter, map, Observable, tap } from 'rxjs';
 import {
   ProductListService,
   TOTAL_REGULAR_PAGES
-} from './product-list/product-list.service';
-import { ProductDetailsService } from './product-details/product-details.service';
+} from '../product-list/product-list.service';
+import { ProductDetailsService } from '../product-details/product-details.service';
 
 export const DEFAULT_PAGE_NUMBER = 1;
 

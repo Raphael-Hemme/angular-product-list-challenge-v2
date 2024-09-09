@@ -11,7 +11,7 @@ import { ProductDetailsService } from '../../../core/services/product-details/pr
 import { ProductDetailsData } from '../../../core/services/api/api.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductDetailsComponent } from '../../components/product-details/product-details.component';
-import { NavigationService } from '../../../core/services/navigation.service';
+import { NavigationService } from '../../../core/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-product-details-page',

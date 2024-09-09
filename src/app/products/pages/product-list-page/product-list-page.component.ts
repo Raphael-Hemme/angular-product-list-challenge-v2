@@ -10,7 +10,7 @@ import { ProductListComponent } from '../../components/product-list/product-list
 import { ProductListEntryData } from '../../../core/services/api/api.service';
 import { Subscription, tap } from 'rxjs';
 import { ProductListService } from '../../../core/services/product-list/product-list.service';
-import { NavigationService } from '../../../core/services/navigation.service';
+import { NavigationService } from '../../../core/services/navigation/navigation.service';
 import { SearchFormComponent } from '../../components/search-form/search-form.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 
