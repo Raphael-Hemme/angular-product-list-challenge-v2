@@ -24,4 +24,8 @@
   @media (min-width: 1200px) {
     padding: $padding-l $padding-l $padding-s $padding-l;
   }
+
+  .back-btn {
+    text-transform: uppercase;
+  }
 }

@@ -1,18 +1,24 @@
-import { Component, computed, Signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Signal
+} from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import {
   PRODUCT_LIST_PAGE_SIZE,
   ProductListService,
-  TOTAL_REGULAR_LIST_LENGTH,
+  TOTAL_REGULAR_LIST_LENGTH
 } from '../../../core/services/product-list/product-list.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-paginator',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatPaginatorModule],
   templateUrl: './paginator.component.html',
-  styleUrl: './paginator.component.scss',
+  styleUrl: './paginator.component.scss'
 })
 export class PaginatorComponent {
   public length = TOTAL_REGULAR_LIST_LENGTH;
@@ -22,10 +28,10 @@ export class PaginatorComponent {
 
   constructor(
     private productListServece: ProductListService,
-    private readonly router: Router,
+    private readonly router: Router
   ) {
     this.pageIndex = computed(
-      () => this.productListServece.currRegularPageNumber() - 1,
+      () => this.productListServece.currRegularPageNumber() - 1
     );
   }
 
@@ -34,7 +40,7 @@ export class PaginatorComponent {
       return;
     }
     this.router.navigate(['/products'], {
-      queryParams: { page: event.pageIndex + 1 },
+      queryParams: { page: event.pageIndex + 1 }
     });
   }
 }

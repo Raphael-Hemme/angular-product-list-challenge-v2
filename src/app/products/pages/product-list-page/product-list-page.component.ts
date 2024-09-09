@@ -24,7 +24,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   public pageNumber = signal<number>(1);
   public currProductList!: Signal<ProductListEntryData[]>;
 
-  private routeSub = new Subscription();
+  private pageQueryParamsSub = new Subscription();
 
   constructor(
     private productListServece: ProductListService,
@@ -34,7 +34,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.routeSub.add(
+    this.pageQueryParamsSub.add(
       this.navigationService
         .handlePageQueryParams()
         .pipe(
@@ -48,6 +48,6 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.routeSub.unsubscribe();
+    this.pageQueryParamsSub.unsubscribe();
   }
 }
