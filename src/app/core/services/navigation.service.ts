@@ -5,6 +5,7 @@ import {
   ProductListService,
   TOTAL_REGULAR_PAGES
 } from './product-list/product-list.service';
+import { ProductDetailsService } from './product-details/product-details.service';
 
 export const DEFAULT_PAGE_NUMBER = 1;
 
@@ -17,7 +18,8 @@ export class NavigationService {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly productListService: ProductListService
+    private readonly productListService: ProductListService,
+    private readonly productDetailsService: ProductDetailsService
   ) {}
 
   public handlePageQueryParams(): Observable<number> {
@@ -46,6 +48,7 @@ export class NavigationService {
     this.router.navigate(['/products'], {
       queryParams: { page: this.productListService.currRegularPageNumber() }
     });
+    this.productDetailsService.clearDisplayedProductDetails();
   }
 
   private handleSideEffectsForPageQueryParams(

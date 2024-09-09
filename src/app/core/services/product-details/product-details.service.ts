@@ -3,7 +3,7 @@ import { ApiService, ProductDetailsData } from '../api/api.service';
 import { filter, take, tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProductDetailsService {
   private productDetailsCache = signal<ProductDetailsData[]>([]);
@@ -28,21 +28,25 @@ export class ProductDetailsService {
         }),
         filter((productDetailsResponse) => !!!productDetailsResponse.error),
         tap((productDetailsResponse) =>
-          this.displayedProductDetails.set(productDetailsResponse.product),
+          this.displayedProductDetails.set(productDetailsResponse.product)
         ),
-        tap(() => console.log(this.productDetailsCache())), // Todo: remove dev logging
+        tap(() => console.log(this.productDetailsCache())) // Todo: remove dev logging
       )
       .subscribe();
   }
 
   public loadProductDetails(productId: number): void {
     const cachedProduct = this.productDetailsCache().filter(
-      (product) => product.id === productId,
+      (product) => product.id === productId
     )[0];
     if (cachedProduct) {
       this.displayedProductDetails.set(cachedProduct);
     } else {
       this.addNewProductDetailsToCache(productId);
     }
+  }
+
+  public clearDisplayedProductDetails(): void {
+    this.displayedProductDetails.set(null);
   }
 }
