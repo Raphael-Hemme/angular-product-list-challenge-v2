@@ -6,7 +6,9 @@
   <div class="product-list-wrapper">
     @if (isLoading()) {
       <app-loading-spinner></app-loading-spinner>
-    } @else if (!errorMsg() && !isLoading()) {
+    }
+
+    @if (!errorMsg()) {
       <app-product-list
         [products]="currProductList"
         [errorMsg]="errorMsg"

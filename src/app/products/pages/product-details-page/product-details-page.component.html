@@ -1,6 +1,8 @@
 @if (isLoading()) {
   <app-loading-spinner></app-loading-spinner>
-} @else if (productDetails() && !retrievalError()) {
+}
+
+@if (productDetails() && !retrievalError()) {
   <app-product-details
     [productDetails]="productDetails"
     [retrievalError]="retrievalError"

@@ -12,7 +12,9 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './not-found-page.component.scss'
 })
 export class NotFoundPageComponent {
-  public errorMessage = signal<string>('404: Product not found');
+  public errorMessage = signal<string>(
+    '404: Product or Page could not be found'
+  );
 
   constructor(private readonly navigationServic: NavigationService) {}
 
