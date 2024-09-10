@@ -61,6 +61,7 @@ export class ApiService {
     const start = (page - 1) * pageSize;
     const url = `${BASE_URL}?limit=${pageSize}&skip=${start}&select=${fieldSelection}`;
 
+    // Todo: Refactor the three nested getFetchPromise functions into a single possibly generic function.
     const getFetchPromise = async (): Promise<ProductListResponse> => {
       try {
         const response = await fetch(url);
@@ -139,7 +140,6 @@ export class ApiService {
           };
         }
       } catch (error) {
-        console.log('Error fetching search results:', error);
         return {
           products: [],
           error: this.prependErrorDomainToErrorMessage(
@@ -162,7 +162,6 @@ export class ApiService {
    */
   public getErrorMessage(error: unknown) {
     if (error instanceof Error) {
-      console.log('received error:', error);
       const { message, cause } = error;
       const moreHelpfulCause = this.getErrorCause(error);
 

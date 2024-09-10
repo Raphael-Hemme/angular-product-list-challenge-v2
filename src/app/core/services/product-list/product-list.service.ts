@@ -27,10 +27,8 @@ export class ProductListService {
   /* Shared data between the two modes */
   public currDisplayedProductList = computed<ProductListEntryData[]>(() => {
     if (this.listMode() === 'SEARCH') {
-      console.log('displaying searchResults', this.searchResults());
       return this.searchResults()[this.currSearchPageNumber() - 1];
     } else {
-      console.log('displaying regular paginated list');
       return this.productListPagedCache()[this.currRegularPageNumber() - 1];
     }
   });
@@ -59,7 +57,6 @@ export class ProductListService {
     if (this.listMode() === 'SEARCH') {
       this.currSearchPageNumber.set(newPageNumber);
     } else {
-      // this.currRegularPageNumber.set(newPageNumber);
       this.loadPage(newPageNumber);
     }
   }
@@ -75,7 +72,6 @@ export class ProductListService {
       .getProductListBatch(forPageNumber)
       .pipe(
         take(1),
-        tap((newBatch) => console.log(newBatch)),
         tap((newBatch) => {
           this.productListPagedCache.update((cache) => {
             const newCacheState = [...cache];
@@ -107,7 +103,6 @@ export class ProductListService {
       .searchProducts(searchTerm)
       .pipe(
         take(1),
-        tap((searchResults) => console.log(searchResults)),
         tap((searchResults) => {
           this.listMode.set('SEARCH');
           this.searchResults.set(
