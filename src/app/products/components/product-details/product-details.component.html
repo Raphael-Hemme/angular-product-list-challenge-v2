@@ -20,10 +20,13 @@
     </p>
   </div>
 
-  <div class="product-details-image-wapper">
+  <div class="product-details-image-container" #imageContainer>
     <img
-      [src]="productDetails()?.images?.[0]"
+      [ngSrc]="productDetails()?.images?.[0] ?? ''"
+      [width]="imageEdgeLength"
+      [height]="imageEdgeLength"
       [alt]="productDetails()?.title"
+      priority
     />
   </div>
 

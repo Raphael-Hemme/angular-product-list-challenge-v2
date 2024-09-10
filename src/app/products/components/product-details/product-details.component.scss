@@ -72,19 +72,14 @@ button {
     }
   }
 
-  .product-details-image-wapper {
+  .product-details-image-container {
     grid-area: image;
     height: 100%;
     overflow: hidden;
     display: flex;
     justify-content: center;
-    border: 1px solid $color-secondary;
+    border: 1px solid $color-border;
     border-radius: $border-radius;
-
-    img {
-      max-width: 100%;
-      object-fit: fit;
-    }
   }
 
   .various-details-container {

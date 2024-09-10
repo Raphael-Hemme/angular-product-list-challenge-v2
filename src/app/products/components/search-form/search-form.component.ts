@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +25,7 @@ import { NgClass } from '@angular/common';
   templateUrl: './search-form.component.html',
   styleUrl: './search-form.component.scss'
 })
-export class SearchFormComponent implements OnInit {
+export class SearchFormComponent implements OnInit, OnDestroy {
   public searchForm!: FormGroup;
 
   private searchSub: Subscription = new Subscription();
@@ -55,6 +60,10 @@ export class SearchFormComponent implements OnInit {
         )
         .subscribe()
     );
+  }
+
+  ngOnDestroy(): void {
+    this.searchSub.unsubscribe();
   }
 
   public clearSearch(): void {
