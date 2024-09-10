@@ -20,13 +20,13 @@
   }
 }
 
-.product-list-error-container,
 .product-list-empty-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 50vh;
   width: 100%;
   border-radius: $border-radius;
-  border: 5px dashed $color-warning;
+  font-size: 1.5rem;
 }

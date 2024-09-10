@@ -15,11 +15,7 @@
       ></app-product-list>
     } @else {
       <app-error-ui>
-        <button
-          mat-stroked-button
-          (click)="retryLoadingProducts()"
-          [disabled]="didRetryLoading"
-        >
+        <button mat-stroked-button (click)="retryLoadingProducts()">
           retry
         </button>
       </app-error-ui>

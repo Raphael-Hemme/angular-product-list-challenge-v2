@@ -17,6 +17,7 @@ import { SearchFormComponent } from '../../components/search-form/search-form.co
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { LoadingSpinnerComponent } from '../../../core/components/loading-spinner/loading-spinner.component';
 import { ErrorUiComponent } from '../../../core/components/error-ui/error-ui.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-list-page',
@@ -27,7 +28,8 @@ import { ErrorUiComponent } from '../../../core/components/error-ui/error-ui.com
     SearchFormComponent,
     PaginatorComponent,
     LoadingSpinnerComponent,
-    ErrorUiComponent
+    ErrorUiComponent,
+    MatButtonModule
   ],
   templateUrl: './product-list-page.component.html',
   styleUrl: './product-list-page.component.scss'
@@ -37,7 +39,6 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   public currProductList!: Signal<ProductListEntryData[]>;
   public errorMsg!: Signal<null | string>;
   public isLoading!: Signal<boolean>;
-  public didRetryLoading = false;
 
   private pageQueryParamsSub = new Subscription();
 
@@ -75,8 +76,6 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   }
 
   public retryLoadingProducts(): void {
-    if (!this.didRetryLoading) {
-      this.productListServece.loadPage(this.pageNumber());
-    }
+    this.productListServece.loadPage(this.pageNumber());
   }
 }
