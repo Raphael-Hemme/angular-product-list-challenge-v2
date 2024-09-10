@@ -52,6 +52,7 @@ export class ProductListService {
       .getProductListBatch(forPageNumber)
       .pipe(
         take(1),
+        tap((newBatch) => console.log(newBatch)),
         tap((newBatch) => {
           this.productListPagedCache.update((cache) => {
             const newCacheState = [...cache];

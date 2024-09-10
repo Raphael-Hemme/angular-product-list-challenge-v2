@@ -33,6 +33,12 @@ export type ProductDetailsResponse = {
   error: string | null;
 };
 
+type ProductDomain =
+  | 'PRODUCT LIST'
+  | 'PRODUCT DETAILS'
+  | 'PRODUCT SEARCH'
+  | 'UNKNOWN';
+
 export const BASE_URL = 'https://dummyjson.com/products';
 
 export const DEFAULT_PRODUCT_LIST_FIELD_SELECTION =
@@ -59,12 +65,7 @@ export class ApiService {
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(
-            'PRODUCT LIST ERROR: ' +
-              'Failed to fetch product list.' +
-              response.status +
-              response.statusText
-          );
+          throw new Error(this.constructErrorStringFromResponse(response));
         } else {
           const data = await response.json();
           return {
@@ -75,7 +76,10 @@ export class ApiService {
       } catch (error) {
         return {
           products: [],
-          error: 'PRODUCT LIST ERROR: ' + this.getErrorMessage(error)
+          error: this.prependErrorDomainToErrorMessage(
+            'PRODUCT LIST',
+            this.getErrorMessage(error)
+          )
         };
       }
     };
@@ -93,12 +97,7 @@ export class ApiService {
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(
-            'PRODUCT DETAILS ERROR: ' +
-              'Failed to fetch product details.' +
-              response.status +
-              response.statusText
-          );
+          throw new Error(this.constructErrorStringFromResponse(response));
         } else {
           const data = await response.json();
           return {
@@ -110,7 +109,10 @@ export class ApiService {
         console.error('Error fetching product details:', error);
         return {
           product: null,
-          error: 'PRODUCT DETAILS ERROR: ' + this.getErrorMessage(error)
+          error: this.prependErrorDomainToErrorMessage(
+            'PRODUCT DETAILS',
+            this.getErrorMessage(error)
+          )
         };
       }
     };
@@ -128,7 +130,7 @@ export class ApiService {
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error('SEARCH ERROR: ' + 'Failed to fetch search results');
+          throw new Error(this.constructErrorStringFromResponse(response));
         } else {
           const data = await response.json();
           return {
@@ -140,7 +142,10 @@ export class ApiService {
         console.log('Error fetching search results:', error);
         return {
           products: [],
-          error: 'SEARCH ERROR: ' + this.getErrorMessage(error)
+          error: this.prependErrorDomainToErrorMessage(
+            'PRODUCT SEARCH',
+            this.getErrorMessage(error)
+          )
         };
       }
     };
@@ -149,7 +154,7 @@ export class ApiService {
   }
 
   /**
-   * Utility function by Kent C. Dodds to get error message from error object object if it actually
+   * Utility function adapted from Kent C. Dodds to get error message from error object object if it actually
    * is an Error object otherwise stringify the 'error'.
    * https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
    * @param error
@@ -157,8 +162,41 @@ export class ApiService {
    */
   public getErrorMessage(error: unknown) {
     if (error instanceof Error) {
-      return error.message + `${error.cause ? ' ' + error.cause : ''}`;
+      console.log('received error:', error);
+      const { message, cause } = error;
+      const moreHelpfulCause = this.getErrorCause(error);
+
+      return message === 'Failed to fetch'
+        ? moreHelpfulCause
+        : message + (cause ?? '');
+    } else {
+      return String(error);
     }
-    return String(error);
+  }
+
+  private getErrorCause(error: Error): string {
+    if (!navigator.onLine && error.message === 'Failed to fetch') {
+      return 'You are offline. Please check your internet connection.';
+    } else if (error.cause) {
+      return String(error.cause);
+    } else {
+      return 'The cause of this error is unknown.';
+    }
+  }
+
+  private constructErrorStringFromResponse(
+    response: Response | null = null
+  ): string {
+    return [response?.status ?? null, response?.statusText ?? null]
+      .filter((el) => el)
+      .join(' ');
+  }
+
+  private prependErrorDomainToErrorMessage(
+    domain: ProductDomain,
+    error: string
+  ): string {
+    return `${domain} ERROR: Failed to fetch ${domain.toLowerCase()}.
+            ${error}`;
   }
 }
