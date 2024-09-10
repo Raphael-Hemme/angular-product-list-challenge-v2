@@ -16,30 +16,53 @@ export class ProductListService {
 
   /* Data for the regular product list */
   public currRegularPageNumber = signal<number>(1);
-
   public productListPagedCache = signal<ProductListEntryData[][]>(
     this.generateInitiallyEmptyProductListCache()
   );
 
+  /* Data for the search results */
+  public searchResults = signal<ProductListEntryData[][]>([]);
+  public currSearchPageNumber = signal<number>(1);
+
+  /* Shared data between the two modes */
   public currDisplayedProductList = computed<ProductListEntryData[]>(() => {
     if (this.listMode() === 'SEARCH') {
       console.log('displaying searchResults', this.searchResults());
-      return this.searchResults();
+      return this.searchResults()[this.currSearchPageNumber() - 1];
     } else {
       console.log('displaying regular paginated list');
       return this.productListPagedCache()[this.currRegularPageNumber() - 1];
     }
   });
+  public currPageSharedPageNumber = computed(() =>
+    this.listMode() === 'SEARCH'
+      ? this.currSearchPageNumber()
+      : this.currRegularPageNumber()
+  );
+
+  public totalListLength = computed(() => {
+    if (this.listMode() === 'SEARCH') {
+      return this.searchResults().flat().length;
+    } else {
+      return TOTAL_REGULAR_LIST_LENGTH;
+    }
+  });
 
   public retrievalError = signal<string | null>(null);
-
-  /* Data for the search results */
-  public searchResults = signal<ProductListEntryData[]>([]);
 
   constructor(
     private readonly apiService: ApiService,
     private readonly loadingService: LoadingService
   ) {}
+
+  public updateCurrPageNumber(newPageNumber: number): void {
+    if (this.listMode() === 'SEARCH') {
+      this.currSearchPageNumber.set(newPageNumber);
+    } else {
+      // this.currRegularPageNumber.set(newPageNumber);
+      this.loadPage(newPageNumber);
+    }
+  }
 
   private generateInitiallyEmptyProductListCache(): ProductListEntryData[][] {
     return Array.from({ length: TOTAL_REGULAR_PAGES }, () => []);
@@ -87,7 +110,9 @@ export class ProductListService {
         tap((searchResults) => console.log(searchResults)),
         tap((searchResults) => {
           this.listMode.set('SEARCH');
-          this.searchResults.set(searchResults.products);
+          this.searchResults.set(
+            this.chunkSearchResultsIntoPages(searchResults.products)
+          );
           this.retrievalError.set(searchResults.error);
         }),
         tap(() => this.loadingService.isLoadingSearchResults.set(false))
@@ -99,5 +124,17 @@ export class ProductListService {
     this.searchResults.set([]);
     this.retrievalError.set(null);
     this.listMode.set('REGULAR');
+  }
+
+  private chunkSearchResultsIntoPages(
+    searchResults: ProductListEntryData[]
+  ): ProductListEntryData[][] {
+    const chunkedSearchResults = [];
+    for (let i = 0; i < searchResults.length; i += PRODUCT_LIST_PAGE_SIZE) {
+      chunkedSearchResults.push(
+        searchResults.slice(i, i + PRODUCT_LIST_PAGE_SIZE)
+      );
+    }
+    return chunkedSearchResults;
   }
 }

@@ -40,7 +40,7 @@ export class SearchFormComponent implements OnInit {
       this.searchForm!.get('search')!.valueChanges
         .pipe(
           // prettier-ignore
-          debounceTime(1000),
+          debounceTime(500),
           // prettier-ignore
           distinctUntilChanged(),
           // The following side effect is used to clear the search results when the search input

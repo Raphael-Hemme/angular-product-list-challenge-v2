@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   styleUrl: './paginator.component.scss'
 })
 export class PaginatorComponent {
-  public length = TOTAL_REGULAR_LIST_LENGTH;
+  public length!: Signal<number>;
   public pageSize = PRODUCT_LIST_PAGE_SIZE;
   public disabled = false;
   public pageIndex!: Signal<number>;
@@ -31,8 +31,9 @@ export class PaginatorComponent {
     private readonly router: Router
   ) {
     this.pageIndex = computed(
-      () => this.productListServece.currRegularPageNumber() - 1
+      () => this.productListServece.currPageSharedPageNumber() - 1
     );
+    this.length = this.productListServece.totalListLength;
   }
 
   public handlePageEvent(event: PageEvent): void {

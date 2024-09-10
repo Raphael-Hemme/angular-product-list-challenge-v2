@@ -64,7 +64,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
         .pipe(
           tap((pageNumber) => {
             this.pageNumber.set(pageNumber);
-            this.productListServece.loadPage(this.pageNumber());
+            this.productListServece.updateCurrPageNumber(this.pageNumber());
           })
         )
         .subscribe()
@@ -76,6 +76,12 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   }
 
   public retryLoadingProducts(): void {
-    this.productListServece.loadPage(this.pageNumber());
+    if (navigator.onLine) {
+      window.location.reload();
+    } else {
+      alert(
+        'You are offline. Please check your internet connection before trying to refresh agin.'
+      );
+    }
   }
 }
