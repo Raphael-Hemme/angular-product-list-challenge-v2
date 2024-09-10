@@ -1,26 +1,34 @@
-@defer {
+@if (isLoading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else if (productDetails() && !retrievalError()) {
   <app-product-details
     [productDetails]="productDetails"
     [retrievalError]="retrievalError"
   >
-    @if (retrievalError()) {
-      <button
-        mat-flat-button
-        (click)="retryLoadingProductDetails()"
-        [disabled]="didRetryLoading"
-      >
-        retry
-      </button>
-    }
     <button
       class="back-btn"
       (click)="navigateBackToProductListPage()"
-      mat-flat-button
+      mat-stroked-button
     >
       back
     </button>
   </app-product-details>
-} @loading (minimum 200ms) {
-  <!-- loading template fragment -->
-  <app-loading-spinner></app-loading-spinner>
+} @else {
+  <app-error-ui [errorMessage]="retrievalError">
+    <button
+      class="retry-btn"
+      mat-stroked-button
+      (click)="retryLoadingProductDetails()"
+      [disabled]="didRetryLoading"
+    >
+      retry
+    </button>
+    <button
+      class="back-btn"
+      (click)="navigateBackToProductListPage()"
+      mat-stroked-button
+    >
+      back
+    </button>
+  </app-error-ui>
 }

@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { ApiService, ProductDetailsData } from '../api/api.service';
 import { filter, take, tap } from 'rxjs';
+import { LoadingService } from '../loading/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,10 @@ export class ProductDetailsService {
   public displayedProductDetails = signal<ProductDetailsData | null>(null);
   public retrievalError = signal<string | null>(null);
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly loadingService: LoadingService
+  ) {}
 
   private addNewProductDetailsToCache(productId: number): void {
     this.apiService
@@ -25,6 +29,7 @@ export class ProductDetailsService {
           }
           this.retrievalError.set(productDetailsResponse.error);
         }),
+        tap(() => this.loadingService.isLoadingProductDetails.set(false)),
         filter((productDetailsResponse) => !!!productDetailsResponse.error),
         tap((productDetailsResponse) =>
           this.displayedProductDetails.set(productDetailsResponse.product)
@@ -34,11 +39,13 @@ export class ProductDetailsService {
   }
 
   public loadProductDetails(productId: number): void {
+    this.loadingService.isLoadingProductDetails.set(true);
     const cachedProduct = this.productDetailsCache().filter(
       (product) => product.id === productId
     )[0];
     if (cachedProduct) {
       this.displayedProductDetails.set(cachedProduct);
+      this.loadingService.isLoadingProductDetails.set(false);
     } else {
       this.addNewProductDetailsToCache(productId);
     }

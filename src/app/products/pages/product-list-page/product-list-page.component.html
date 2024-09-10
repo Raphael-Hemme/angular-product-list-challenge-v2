@@ -4,9 +4,23 @@
     <app-paginator></app-paginator>
   </div>
   <div class="product-list-wrapper">
-    <app-product-list
-      [products]="currProductList"
-      [errorMsg]="errorMsg"
-    ></app-product-list>
+    @if (isLoading()) {
+      <app-loading-spinner></app-loading-spinner>
+    } @else if (!errorMsg() && !isLoading()) {
+      <app-product-list
+        [products]="currProductList"
+        [errorMsg]="errorMsg"
+      ></app-product-list>
+    } @else {
+      <app-error-ui>
+        <button
+          mat-stroked-button
+          (click)="retryLoadingProducts()"
+          [disabled]="didRetryLoading"
+        >
+          retry
+        </button>
+      </app-error-ui>
+    }
   </div>
 </section>

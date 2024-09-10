@@ -1,6 +1,11 @@
 <section class="page-container not-found-page-container">
-  <h1>Oops! There was a problem.</h1>
+  <!-- <h1>Oops! There was a problem.</h1>
   <h2>404 - Page not found</h2>
   <p>Please cilck the link below to go back to the product list.</p>
-  <a routerLink="">Go to Product List</a>
+  <a routerLink="">Go to Product List</a> -->
+  <app-error-ui [errorMessage]="errorMessage">
+    <button mat-stroked-button (click)="navigateBackToProductList()">
+      back
+    </button>
+  </app-error-ui>
 </section>

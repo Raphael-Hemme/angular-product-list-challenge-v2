@@ -1,6 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { ApiService, ProductListEntryData } from '../api/api.service';
 import { filter, take, tap } from 'rxjs';
+import { LoadingService } from '../loading/loading.service';
 
 export const PRODUCT_LIST_PAGE_SIZE = 20;
 export const TOTAL_REGULAR_LIST_LENGTH = 200;
@@ -35,7 +36,10 @@ export class ProductListService {
   /* Data for the search results */
   public searchResults = signal<ProductListEntryData[]>([]);
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly loadingService: LoadingService
+  ) {}
 
   private generateInitiallyEmptyProductListCache(): ProductListEntryData[][] {
     return Array.from({ length: TOTAL_REGULAR_PAGES }, () => []);
@@ -56,6 +60,7 @@ export class ProductListService {
           });
           this.retrievalError.set(newBatch.error);
         }),
+        tap(() => this.loadingService.isLoadingRegularList.set(false)),
         filter((newBatch) => !!!newBatch.error),
         tap(() => this.currRegularPageNumber.set(forPageNumber))
       )
@@ -63,14 +68,17 @@ export class ProductListService {
   }
 
   public loadPage(pageNumber: number): void {
+    this.loadingService.isLoadingRegularList.set(true);
     if (this.productListPagedCache()[pageNumber - 1].length === 0) {
       this.addNewProductBatchToCache(pageNumber);
     } else {
       this.currRegularPageNumber.set(pageNumber);
+      this.loadingService.isLoadingRegularList.set(false);
     }
   }
 
   public searchProducts(searchTerm: string): void {
+    this.loadingService.isLoadingSearchResults.set(true);
     this.apiService
       .searchProducts(searchTerm)
       .pipe(
@@ -80,7 +88,8 @@ export class ProductListService {
           this.listMode.set('SEARCH');
           this.searchResults.set(searchResults.products);
           this.retrievalError.set(searchResults.error);
-        })
+        }),
+        tap(() => this.loadingService.isLoadingSearchResults.set(false))
       )
       .subscribe();
   }

@@ -1,5 +1,5 @@
 <div class="product-list-container">
-  @if (products().length > 0 && errorMsg() === null) {
+  @if (products().length > 0) {
     <ul class="product-list">
       @for (product of products(); track product.id) {
         <a
@@ -11,19 +11,10 @@
         ></a>
       }
     </ul>
-  } @else if (products().length === 0 && errorMsg() === null) {
+  } @else {
     <div class="product-list-empty-container">
       <p class="product-list-empty">
         No products found please try another search term
-      </p>
-    </div>
-  } @else {
-    <div class="product-list-error-container error-container">
-      <p class="product-list-error">
-        {{
-          errorMsg() ??
-            'Sorry, there has been an error, we could not identify. Please try again.'
-        }}
       </p>
     </div>
   }

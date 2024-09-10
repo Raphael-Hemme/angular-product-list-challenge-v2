@@ -1,0 +1,29 @@
+@import '../../../../styles/variables';
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  width: 100%;
+  border-radius: $border-radius;
+
+  .action-container {
+    padding: $padding-l 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $gap-s;
+  }
+}
+
+.error-colors {
+  background-color: $color-primary;
+  color: $color-white;
+}
+
+.warning-colors {
+  background-color: $color-warning;
+  color: $color-black;
+}

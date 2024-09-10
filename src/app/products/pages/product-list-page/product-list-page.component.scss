@@ -1,5 +1,22 @@
 @import '../../../../styles/variables.scss';
 
+button {
+  text-transform: uppercase;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  background-color: $color-primary;
+  border-color: $color-white;
+  color: $color-white;
+}
+
+.mat-mdc-outlined-button[disabled],
+.mat-mdc-outlined-button.mat-mdc-button-disabled {
+  color: $color-disabled;
+  border-color: $color-disabled;
+  border-style: dotted;
+}
+
 .paginator-and-search-wrapper {
   position: fixed;
   top: 0;

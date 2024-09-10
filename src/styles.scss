@@ -32,14 +32,3 @@ ul {
   height: 100%;
   width: 100%;
 }
-
-.error-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 50vh;
-  width: 100%;
-  border-radius: $border-radius;
-  border: 5px dashed $color-warning;
-}

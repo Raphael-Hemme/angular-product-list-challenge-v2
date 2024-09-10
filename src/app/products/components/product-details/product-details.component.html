@@ -1,56 +1,41 @@
-@if (productDetails() && !retrievalError()) {
-  <section class="product-details-container">
-    <div class="back-btn-wrapper">
-      <ng-content></ng-content>
-    </div>
+<section class="product-details-container">
+  <div class="back-btn-wrapper">
+    <ng-content></ng-content>
+  </div>
 
-    <h2 class="product-details-brand">
-      {{ productDetails()?.brand ?? 'No brand' }}
-    </h2>
+  <h2 class="product-details-brand">
+    {{ productDetails()?.brand ?? 'No brand' }}
+  </h2>
 
-    <h3 class="product-details-title">
-      {{ productDetails()?.title ?? 'No title' }}
-    </h3>
+  <h3 class="product-details-title">
+    {{ productDetails()?.title ?? 'No title' }}
+  </h3>
 
-    <div class="product-details-price-and-status-container">
-      <p class="product-details-price">
-        ${{ productDetails()?.price ?? 'Priceless ;)' }}
-      </p>
-      <p class="product-details-status">
-        {{ productDetails()?.availabilityStatus ?? 'Availability unknown' }}
-      </p>
-    </div>
+  <div class="product-details-price-and-status-container">
+    <p class="product-details-price">
+      ${{ productDetails()?.price ?? 'Priceless ;)' }}
+    </p>
+    <p class="product-details-status">
+      {{ productDetails()?.availabilityStatus ?? 'Availability unknown' }}
+    </p>
+  </div>
 
-    <div class="product-details-image-wapper">
-      <img
-        [src]="productDetails()?.images?.[0]"
-        [alt]="productDetails()?.title"
-      />
-    </div>
+  <div class="product-details-image-wapper">
+    <img
+      [src]="productDetails()?.images?.[0]"
+      [alt]="productDetails()?.title"
+    />
+  </div>
 
-    <div class="various-details-container">
-      <h4>Tags</h4>
-      <ul class="product-details-tag-list">
-        @for (
-          tag of productDetails()?.tags ?? [];
-          let idx = $index;
-          track idx
-        ) {
-          <mat-chip class="product-details-tag">{{ tag }}</mat-chip>
-        }
-      </ul>
+  <div class="various-details-container">
+    <h4>Tags</h4>
+    <ul class="product-details-tag-list">
+      @for (tag of productDetails()?.tags ?? []; let idx = $index; track idx) {
+        <mat-chip class="product-details-tag">{{ tag }}</mat-chip>
+      }
+    </ul>
 
-      <h4>Description</h4>
-      <p>{{ productDetails()?.description ?? 'No description' }}</p>
-    </div>
-  </section>
-} @else {
-  <section class="product-details-error error-container">
-    <h2>Error</h2>
-    <p>Failed to retrieve product details</p>
-    <p>{{ retrievalError() }}</p>
-    <div class="action-container">
-      <ng-content></ng-content>
-    </div>
-  </section>
-}
+    <h4>Description</h4>
+    <p>{{ productDetails()?.description ?? 'No description' }}</p>
+  </div>
+</section>
