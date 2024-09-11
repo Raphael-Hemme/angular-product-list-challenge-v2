@@ -64,6 +64,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.searchSub.unsubscribe();
+    this.clearSearch();
   }
 
   public clearSearch(): void {

@@ -1,5 +1,9 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { ApiService, ProductListEntryData } from '../api/api.service';
+import {
+  ApiService,
+  ProductDetailsData,
+  ProductListEntryData
+} from '../api/api.service';
 import { filter, take, tap } from 'rxjs';
 import { LoadingService } from '../loading/loading.service';
 
@@ -75,7 +79,9 @@ export class ProductListService {
         tap((newBatch) => {
           this.productListPagedCache.update((cache) => {
             const newCacheState = [...cache];
-            newCacheState[insertIndex] = newBatch.products;
+            newCacheState[insertIndex] = this.getTypeSafeResonseDataOrDefault(
+              newBatch.data
+            );
             return newCacheState;
           });
           this.retrievalError.set(newBatch.error);
@@ -105,9 +111,10 @@ export class ProductListService {
         take(1),
         tap((searchResults) => {
           this.listMode.set('SEARCH');
-          this.searchResults.set(
-            this.chunkSearchResultsIntoPages(searchResults.products)
+          const chunkedArr = this.chunkSearchResultsIntoPages(
+            this.getTypeSafeResonseDataOrDefault(searchResults.data)
           );
+          this.searchResults.set(chunkedArr);
           this.retrievalError.set(searchResults.error);
         }),
         tap(() => this.loadingService.isLoadingSearchResults.set(false))
@@ -126,10 +133,15 @@ export class ProductListService {
   ): ProductListEntryData[][] {
     const chunkedSearchResults = [];
     for (let i = 0; i < searchResults.length; i += PRODUCT_LIST_PAGE_SIZE) {
-      chunkedSearchResults.push(
-        searchResults.slice(i, i + PRODUCT_LIST_PAGE_SIZE)
-      );
+      const chunk = searchResults.slice(i, i + PRODUCT_LIST_PAGE_SIZE);
+      chunkedSearchResults.push(chunk);
     }
-    return chunkedSearchResults;
+    return chunkedSearchResults.length > 0 ? chunkedSearchResults : [[]];
+  }
+
+  private getTypeSafeResonseDataOrDefault(
+    internalResponseData: ProductListEntryData[] | ProductDetailsData | null
+  ): ProductListEntryData[] {
+    return Array.isArray(internalResponseData) ? internalResponseData : [];
   }
 }

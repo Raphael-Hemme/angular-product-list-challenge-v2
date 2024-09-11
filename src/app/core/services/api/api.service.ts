@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { catchError, from, map, Observable, of, take } from 'rxjs';
 
 export type ProductListEntryData = {
   id: number;
@@ -8,11 +8,6 @@ export type ProductListEntryData = {
   price: number;
   description: string;
   thumbnail: string;
-};
-
-export type ProductListResponse = {
-  products: ProductListEntryData[];
-  error: string | null;
 };
 
 export type ProductDetailsData = {
@@ -28,16 +23,18 @@ export type ProductDetailsData = {
   availabilityStatus: string;
 };
 
-export type ProductDetailsResponse = {
-  product: ProductDetailsData | null;
+export type InternalResponseWrapper = {
+  data: ProductListEntryData[] | ProductDetailsData | null;
   error: string | null;
 };
 
-type ProductDomain =
-  | 'PRODUCT LIST'
-  | 'PRODUCT DETAILS'
-  | 'PRODUCT SEARCH'
-  | 'UNKNOWN';
+type ValidProductListResponseData = {
+  products: ProductListEntryData[];
+};
+
+type ValidProductDetailsResponseData = ProductDetailsData;
+
+type ProductDomain = 'PRODUCT LIST' | 'PRODUCT DETAILS' | 'PRODUCT SEARCH';
 
 export const BASE_URL = 'https://dummyjson.com/products';
 
@@ -57,100 +54,37 @@ export class ApiService {
     page: number,
     pageSize: number = 20,
     fieldSelection: string = DEFAULT_PRODUCT_LIST_FIELD_SELECTION
-  ): Observable<ProductListResponse> {
+  ): Observable<InternalResponseWrapper> {
     const start = (page - 1) * pageSize;
     const url = `${BASE_URL}?limit=${pageSize}&skip=${start}&select=${fieldSelection}`;
 
-    // Todo: Refactor the three nested getFetchPromise functions into a single possibly generic function.
-    const getFetchPromise = async (): Promise<ProductListResponse> => {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(this.constructErrorStringFromResponse(response));
-        } else {
-          const data = await response.json();
-          return {
-            products: data.products,
-            error: null
-          };
-        }
-      } catch (error) {
-        return {
-          products: [],
-          error: this.prependErrorDomainToErrorMessage(
-            'PRODUCT LIST',
-            this.getErrorMessage(error)
-          )
-        };
-      }
-    };
-
-    return from(getFetchPromise());
+    return this.getQueryObservable(url, 'PRODUCT LIST');
   }
 
   public getProductDetails(
     productId: number,
     fieldSelection: string = DEFAULT_PRODUCT_DETAILS_FIELD_SELECTION
-  ): Observable<ProductDetailsResponse> {
+  ): Observable<InternalResponseWrapper> {
     const url = `${BASE_URL}/${productId}?select=${fieldSelection}`;
 
-    const getFetchPromise = async (): Promise<ProductDetailsResponse> => {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(this.constructErrorStringFromResponse(response));
-        } else {
-          const data = await response.json();
-          return {
-            product: data,
-            error: null
-          };
-        }
-      } catch (error) {
-        console.error('Error fetching product details:', error);
-        return {
-          product: null,
-          error: this.prependErrorDomainToErrorMessage(
-            'PRODUCT DETAILS',
-            this.getErrorMessage(error)
-          )
-        };
-      }
-    };
-
-    return from(getFetchPromise());
+    return this.getQueryObservable(url, 'PRODUCT DETAILS');
   }
 
   public searchProducts(
     searchQuery: string,
     fieldSelection: string = DEFAULT_PRODUCT_LIST_FIELD_SELECTION
-  ): Observable<ProductListResponse> {
+  ): Observable<InternalResponseWrapper> {
     const url = `${BASE_URL}/search?q=${searchQuery}&select=${fieldSelection}`;
 
-    const getFetchPromise = async (): Promise<ProductListResponse> => {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(this.constructErrorStringFromResponse(response));
-        } else {
-          const data = await response.json();
-          return {
-            products: data.products,
-            error: null
-          };
-        }
-      } catch (error) {
-        return {
-          products: [],
-          error: this.prependErrorDomainToErrorMessage(
-            'PRODUCT SEARCH',
-            this.getErrorMessage(error)
-          )
-        };
-      }
-    };
+    return this.getQueryObservable(url, 'PRODUCT SEARCH');
+  }
 
-    return from(getFetchPromise());
+  public searchProductsNew(
+    searchQuery: string,
+    fieldSelection: string = DEFAULT_PRODUCT_LIST_FIELD_SELECTION
+  ): Observable<InternalResponseWrapper> {
+    const url = `${BASE_URL}/search?q=${searchQuery}&select=${fieldSelection}`;
+    return this.getQueryObservable(url, 'PRODUCT SEARCH');
   }
 
   /**
@@ -173,6 +107,90 @@ export class ApiService {
     }
   }
 
+  private getQueryObservable(
+    url: string,
+    query: ProductDomain
+  ): Observable<InternalResponseWrapper> {
+    return from(this.getFetchPromise(url)).pipe(
+      // take(1),
+      // prettier-ignore
+      map((responseData) => this.handleUnknownResponseData(responseData, query)),
+      catchError((error) => {
+        return of({
+          data: [] as ProductListEntryData[],
+          error: this.prependErrorDomainToErrorMessage(
+            query,
+            this.getErrorMessage(error)
+          )
+        });
+      })
+    );
+  }
+
+  private handleUnknownResponseData(
+    responseData: unknown,
+    query: ProductDomain
+  ): InternalResponseWrapper {
+    if (this.isValidValidProductDetailsData(responseData)) {
+      // prettier-ignore
+      const data = this.extractValidResponseData(responseData, query) as ProductDetailsData;
+      return {
+        data,
+        error: null
+      };
+    } else if (this.isValidValidProductListData(responseData)) {
+      // prettier-ignore
+      const data = this.extractValidResponseData(responseData, query) as ProductListEntryData[];
+      return {
+        data,
+        error: null
+      };
+    } else {
+      throw new Error(this.getErrorMessage(responseData));
+    }
+  }
+
+  private extractValidResponseData(
+    responseData:
+      | ValidProductDetailsResponseData
+      | ValidProductListResponseData,
+    query: ProductDomain
+  ): ProductDetailsData | ProductListEntryData[] {
+    if (query === 'PRODUCT SEARCH' || query === 'PRODUCT LIST') {
+      // prettier-ignore
+      return (responseData as ValidProductListResponseData).products as ProductListEntryData[];
+    } else {
+      return responseData as ProductDetailsData;
+    }
+  }
+
+  private isValidValidProductDetailsData(
+    data: any
+  ): data is ValidProductDetailsResponseData {
+    return !(
+      !data ||
+      Object.hasOwn(data, 'message') ||
+      data instanceof Error ||
+      Array.isArray(data)
+    );
+  }
+
+  private isValidValidProductListData(
+    data: any
+  ): data is ValidProductListResponseData {
+    return !(
+      !data ||
+      Object.hasOwn(data, 'message') ||
+      data instanceof Error ||
+      !Object.hasOwn(data, 'products')
+    );
+  }
+
+  private async getFetchPromise<T>(url: string): Promise<T> {
+    const response = await fetch(url);
+    return await response.json();
+  }
+
   private getErrorCause(error: Error): string {
     if (!navigator.onLine && error.message === 'Failed to fetch') {
       return 'You are offline. Please check your internet connection.';
@@ -181,14 +199,6 @@ export class ApiService {
     } else {
       return 'The cause of this error is unknown.';
     }
-  }
-
-  private constructErrorStringFromResponse(
-    response: Response | null = null
-  ): string {
-    return [response?.status ?? null, response?.statusText ?? null]
-      .filter((el) => el)
-      .join(' ');
   }
 
   private prependErrorDomainToErrorMessage(

@@ -1,5 +1,9 @@
 import { Injectable, signal } from '@angular/core';
-import { ApiService, ProductDetailsData } from '../api/api.service';
+import {
+  ApiService,
+  ProductDetailsData,
+  ProductListEntryData
+} from '../api/api.service';
 import { filter, take, tap } from 'rxjs';
 import { LoadingService } from '../loading/loading.service';
 
@@ -22,7 +26,9 @@ export class ProductDetailsService {
       .pipe(
         take(1),
         tap((productDetailsResponse) => {
-          const newDetails = productDetailsResponse.product;
+          const newDetails = this.getTypeSafeResonseDataOrDefault(
+            productDetailsResponse.data
+          );
           const error = productDetailsResponse.error;
           if (newDetails && !!!error) {
             this.productDetailsCache.update((cache) => [...cache, newDetails]);
@@ -32,7 +38,9 @@ export class ProductDetailsService {
         tap(() => this.loadingService.isLoadingProductDetails.set(false)),
         filter((productDetailsResponse) => !!!productDetailsResponse.error),
         tap((productDetailsResponse) =>
-          this.displayedProductDetails.set(productDetailsResponse.product)
+          this.displayedProductDetails.set(
+            this.getTypeSafeResonseDataOrDefault(productDetailsResponse.data)
+          )
         )
       )
       .subscribe();
@@ -53,5 +61,14 @@ export class ProductDetailsService {
 
   public clearDisplayedProductDetails(): void {
     this.displayedProductDetails.set(null);
+  }
+
+  private getTypeSafeResonseDataOrDefault(
+    internalResponseData: ProductListEntryData[] | ProductDetailsData | null
+  ): ProductDetailsData | null {
+    if (Array.isArray(internalResponseData) || internalResponseData === null) {
+      return null;
+    }
+    return internalResponseData || null;
   }
 }
