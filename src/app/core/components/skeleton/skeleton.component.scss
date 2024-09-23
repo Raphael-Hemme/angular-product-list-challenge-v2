@@ -1,6 +1,6 @@
 @import '../../../../styles/variables.scss';
 
-@keyframes background-color-change {
+@keyframes backgroundColorChange {
   0% {
     background-color: $color-skeleton-1;
   }
@@ -13,6 +13,5 @@
 }
 
 .skeleton {
-  background-color: $color-skeleton-1;
-  transition: background-color-change 300ms ease-in-out infinite;
+  animation: backgroundColorChange 1000ms ease-in-out infinite;
 }
