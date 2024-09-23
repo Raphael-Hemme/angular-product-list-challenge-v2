@@ -21,13 +21,20 @@
   </div>
 
   <div class="product-details-image-container" #imageContainer>
-    <img
-      [ngSrc]="productDetails()?.images?.[0] ?? ''"
-      [width]="imageEdgeLength"
-      [height]="imageEdgeLength"
-      [alt]="productDetails()?.title"
-      priority
-    />
+    @defer {
+      <img
+        [ngSrc]="productDetails()?.images?.[0] ?? ''"
+        [width]="imageEdgeLength"
+        [height]="imageEdgeLength"
+        [alt]="productDetails()?.title"
+        priority
+      />
+    } @loading (minimum 300ms) {
+      <app-skeleton
+        [width]="skeletonWidth"
+        [height]="skeletonHeight"
+      ></app-skeleton>
+    }
   </div>
 
   <div class="various-details-container">
