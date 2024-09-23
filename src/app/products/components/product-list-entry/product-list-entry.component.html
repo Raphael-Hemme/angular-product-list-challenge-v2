@@ -12,13 +12,17 @@
 
   <mat-card-content>
     <div class="image-wrapper">
-      <img
-        mat-card-image
-        [ngSrc]="product.thumbnail"
-        [width]="300"
-        [height]="300"
-        [alt]="'Product shot of ' + product.title"
-      />
+      @defer {
+        <img
+          mat-card-image
+          [ngSrc]="product.thumbnail"
+          [width]="300"
+          [height]="300"
+          [alt]="'Product shot of ' + product.title"
+        />
+      } @loading (minimum 300ms) {
+        <app-skeleton width="300px" height="300px"></app-skeleton>
+      }
     </div>
     <p class="product-description">
       {{

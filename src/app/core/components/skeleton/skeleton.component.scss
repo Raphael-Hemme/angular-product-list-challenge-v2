@@ -1,0 +1,18 @@
+@import '../../../../styles/variables.scss';
+
+@keyframes background-color-change {
+  0% {
+    background-color: $color-skeleton-1;
+  }
+  50% {
+    background-color: $color-skeleton-2;
+  }
+  100% {
+    background-color: $color-skeleton-1;
+  }
+}
+
+.skeleton {
+  background-color: $color-skeleton-1;
+  transition: background-color-change 300ms ease-in-out infinite;
+}
