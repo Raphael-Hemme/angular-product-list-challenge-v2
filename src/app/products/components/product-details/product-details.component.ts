@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { MatChip } from '@angular/material/chips';
 import { ProductDetailsData } from '../../../core/services/api/api.service';
-import { MatButtonModule } from '@angular/material/button';
 import { NgOptimizedImage } from '@angular/common';
 import { SkeletonComponent } from '../../../core/components/skeleton/skeleton.component';
 
@@ -16,7 +15,7 @@ const defaultEdgeLength = 400;
   selector: 'app-product-details',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatChip, MatButtonModule, NgOptimizedImage, SkeletonComponent],
+  imports: [MatChip, NgOptimizedImage, SkeletonComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })

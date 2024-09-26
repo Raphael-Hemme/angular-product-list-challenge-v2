@@ -1,4 +1,6 @@
-<app-header></app-header>
+@if (!isOnSplashPage()) {
+  <app-header></app-header>
+}
 <main>
   <router-outlet />
 </main>

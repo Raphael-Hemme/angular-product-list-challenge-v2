@@ -1,0 +1,25 @@
+@import '../../../../styles/variables.scss';
+
+h1 {
+  margin: 0 0 3rem 0;
+}
+
+.splash-page-container {
+  height: calc(100vh - 2 * $padding-s);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: $breakpoint-m) {
+    height: calc(100vh - 2 * $padding-l);
+  }
+
+  .splash-page-action-container {
+    margin: 5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

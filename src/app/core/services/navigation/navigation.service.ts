@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Injectable, signal } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { filter, map, Observable, tap } from 'rxjs';
 import {
   ProductListService,
@@ -15,12 +15,25 @@ type MappedValuesForQueryParams = number | 'NOT_FOUND' | 'REDIRECT';
   providedIn: 'root'
 })
 export class NavigationService {
+  public isOnSplashPage = signal(true);
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly productListService: ProductListService,
     private readonly productDetailsService: ProductDetailsService
-  ) {}
+  ) {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        tap((event) => {
+          this.isOnSplashPage.set(event.url === '/');
+          console.log(event);
+          console.log(this.isOnSplashPage());
+        })
+      )
+      .subscribe();
+  }
 
   public handlePageQueryParams(): Observable<number> {
     return this.route.queryParams.pipe(
