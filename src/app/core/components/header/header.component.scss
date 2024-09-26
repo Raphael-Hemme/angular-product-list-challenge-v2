@@ -1,0 +1,26 @@
+@import '../../../../styles/variables.scss';
+
+h1 {
+  margin: 0;
+  line-height: 1;
+}
+
+.header-container {
+  background-color: $color-primary;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: $header-height;
+  padding: $padding-s;
+
+  display: flex;
+  align-items: flex-end;
+  @media (min-width: $breakpoint-m) {
+    padding: $padding-s $padding-l;
+  }
+
+  .shop-title {
+    font-size: 2rem;
+    color: $color-white;
+  }
+}

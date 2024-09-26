@@ -8,8 +8,9 @@ $gap-l: $padding-l;
 
 $p-line-height: 1.5rem;
 
-$color-primary: #005cbb;
-$color-secondary: #4f7a6c;
+$color-primary: #9d14ff;
+$color-secondary: #76c4aa;
+
 $color-success: #28a745;
 $color-danger: #dc3545;
 $color-warning: #ffc107;
@@ -40,3 +41,5 @@ $product-list-page-margin-top-s: calc(
 $product-list-page-margin-top-l: calc(
   #{$product-list-header-height-l} - #{$padding-s}
 );
+
+$header-height: calc(2rem + 2 * $padding-s);
