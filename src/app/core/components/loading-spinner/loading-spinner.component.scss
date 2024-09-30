@@ -1,10 +1,13 @@
 @import '../../../../styles/variables';
 
+$combined-header-height-l: calc($header-height + $product-list-header-height-l);
+$combined-header-height-s: calc($header-height + $product-list-header-height-s);
+
 .loading-container {
-  height: 100vh;
+  height: calc(100vh - $combined-header-height-l);
   width: 100vw;
   position: absolute;
-  top: 0;
+  top: $combined-header-height-l;
   left: 0;
   z-index: 20;
   display: flex;
@@ -12,10 +15,15 @@
   align-items: center;
   background-color: $color-white;
 
+  @media (min-width: $breakpoint-m) {
+    height: calc(100vh - $combined-header-height-s);
+    top: $combined-header-height-s;
+  }
+
   .loader {
     width: 200px; /* the size */
     padding: 15px; /* the border thickness */
-    background: $color-primary; /* the color */
+    background: $color-primary;
 
     aspect-ratio: 1;
     border-radius: 50%;
