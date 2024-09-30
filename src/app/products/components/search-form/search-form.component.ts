@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
   OnDestroy,
   OnInit
 } from '@angular/core';
@@ -26,6 +27,8 @@ import { NgClass } from '@angular/common';
   styleUrl: './search-form.component.scss'
 })
 export class SearchFormComponent implements OnInit, OnDestroy {
+  @Input() isSplashPageSearch = false;
+
   public searchForm!: FormGroup;
 
   private searchSub: Subscription = new Subscription();
@@ -35,7 +38,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     private readonly productListService: ProductListService
   ) {
     this.searchForm = this.fb.group({
-      search: ['']
+      search: [this.productListService.currSearchTerm()]
     });
   }
 
@@ -56,6 +59,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
             }
           }),
           filter((value) => value.length > 0),
+          tap((value) => this.productListService.currSearchTerm.set(value)),
           tap((value) => this.searchProducts(value))
         )
         .subscribe()
@@ -64,7 +68,9 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.searchSub.unsubscribe();
-    this.clearSearch();
+    if (!this.isSplashPageSearch) {
+      this.clearSearch();
+    }
   }
 
   public clearSearch(): void {

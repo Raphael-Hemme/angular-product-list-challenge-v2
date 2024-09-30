@@ -19,7 +19,9 @@ export class ProductListService {
   public listMode = signal<'REGULAR' | 'SEARCH'>('REGULAR');
 
   /* Data for the regular product list */
+  // Todo: extract into separate SearchServicees
   public currRegularPageNumber = signal<number>(1);
+  public currSearchTerm = signal<string>('');
   public productListPagedCache = signal<ProductListEntryData[][]>(
     this.generateInitiallyEmptyProductListCache()
   );

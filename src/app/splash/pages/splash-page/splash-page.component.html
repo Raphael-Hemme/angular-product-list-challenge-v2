@@ -3,7 +3,8 @@
   <h2>You'll need them, but not really!</h2>
 
   <div class="splash-page-action-container">
-    <app-search-form></app-search-form>
+    <app-search-form [isSplashPageSearch]="true"></app-search-form>
+    <button class="search-btn" (click)="handleSearchBtn()">search</button>
     <a
       class="browse-product-list-link"
       routerLink="/products"
