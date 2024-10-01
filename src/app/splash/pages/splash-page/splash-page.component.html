@@ -4,11 +4,10 @@
 
   <div class="splash-page-action-container">
     <app-search-form [isSplashPageSearch]="true"></app-search-form>
-    <button class="search-btn" (click)="handleSearchBtn()">search</button>
-    <a
-      class="browse-product-list-link"
-      routerLink="/products"
-      mat-stroked-button
+    <button class="search-btn" (click)="handleSearchBtn()" mat-flat-button>
+      search
+    </button>
+    <a class="browse-product-list-link" routerLink="/products" mat-flat-button
       >browse</a
     >
   </div>
