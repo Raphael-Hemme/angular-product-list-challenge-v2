@@ -11,17 +11,33 @@ h1 {
   top: 0;
   z-index: 10;
   height: $header-height;
-  padding: $padding-s;
+  padding: 0 $padding-s;
 
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   @media (min-width: $breakpoint-m) {
-    padding: $padding-s $padding-l;
+    padding: 0 $padding-l;
   }
 
-  .shop-title {
-    font-size: 2rem;
-    color: $color-white;
+  .logo-and-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    a {
+      display: flex;
+      align-items: center;
+      img {
+        height: 3.5rem;
+      }
+    }
+    .shop-title {
+      display: none;
+      font-size: 2rem;
+      color: $color-white;
+      @media (min-width: $breakpoint-m) {
+        display: block;
+      }
+    }
   }
 }
