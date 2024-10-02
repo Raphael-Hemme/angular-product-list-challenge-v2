@@ -34,17 +34,22 @@ a {
   // background-color: $color-primary;
 
   color: $color-white;
-  background: linear-gradient(
-      217deg,
-      rgba(157, 20, 255, 0.8),
-      rgba(255, 0, 0, 0%) 70.71%
-    ),
-    linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
-    linear-gradient(336deg, rgba(0, 102, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+  // prettier-ignore
+  background: 
+    linear-gradient(217deg, rgba(159, 132, 200, 0.8), rgba(255, 0, 0, 0) 70.71%),
+    linear-gradient(127deg, rgba(169, 196, 120, 0.9), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(104, 192, 210, 0.8), rgba(0, 0, 255, 0) 70.71%);
 
   @media (min-width: $breakpoint-m) {
     //height: calc(100vh - 2 * $padding-l);
     padding: $padding-l;
+  }
+
+  img {
+    width: 70%;
+    @media (min-width: $breakpoint-m) {
+      width: 40vh;
+    }
   }
 
   .splash-page-action-container {
