@@ -8,6 +8,7 @@
   flex-wrap: nowrap;
   padding: $padding-xs 0;
   gap: $gap-xs;
+  position: relative;
 
   .search-input {
     width: 100%;
@@ -24,22 +25,23 @@
     -webkit-appearance: none;
   }
 
-  .clear-btn-visible {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .clear-btn-wrapper {
+    width: 0;
+    height: 0;
+    .clear-btn-visible {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    position: absolute;
-    top: calc(2 * #{$padding-xs} - 2px);
-    right: $padding-xs;
-
-    @media (min-width: $breakpoint-m) {
-      top: calc(2 * #{$padding-xs} + 3px);
-      right: calc(50% + #{$padding-xs});
+      position: relative;
+      // Not happy about the two magic numbers for left and top but they work for now.
+      left: -3rem;
+      top: -1.25rem;
+      z-index: 10;
     }
-  }
 
-  .clear-btn-hidden {
-    display: none;
+    .clear-btn-hidden {
+      display: none;
+    }
   }
 }

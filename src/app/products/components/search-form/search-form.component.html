@@ -10,17 +10,19 @@
       aria-label="Search"
     />
 
-    <button
-      [ngClass]="
-        searchForm.get('search')?.value
-          ? 'clear-btn-visible'
-          : 'clear-btn-hidden'
-      "
-      mat-icon-button
-      aria-label="Clear search"
-      (click)="clearSearch()"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
+    <div class="clear-btn-wrapper">
+      <button
+        [ngClass]="
+          searchForm.get('search')?.value
+            ? 'clear-btn-visible'
+            : 'clear-btn-hidden'
+        "
+        mat-icon-button
+        aria-label="Clear search"
+        (click)="clearSearch()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </form>
 </div>
