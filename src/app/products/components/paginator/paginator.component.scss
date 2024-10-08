@@ -1,3 +1,13 @@
-.mat-mdc-paginator {
-  background-color: unset;
+li button:hover {
+  svg {
+    fill: theme('colors.teal.400');
+  }
+}
+
+li button:disabled {
+  cursor: default;
+  pointer-events: none;
+  svg {
+    fill: theme('colors.gray.400');
+  }
 }
