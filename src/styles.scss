@@ -4,10 +4,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-* {
-  box-sizing: border-box;
-}
-
 /* Angular Material specific styles */
 html,
 body {
@@ -39,9 +35,4 @@ ul {
   flex-direction: column;
   height: 100%;
   width: 100%;
-}
-
-// Oveerwriting specific material styles since custom styling does not work as described in the docs
-.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-unthemed.mat-mdc-button-base {
-  background-color: $color-primary;
 }

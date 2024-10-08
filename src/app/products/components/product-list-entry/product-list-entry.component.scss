@@ -1,10 +1,6 @@
 @import '../../../../styles/variables.scss';
 
-.product-list-card {
-  width: 100%;
-}
-
-.mat-mdc-card-header {
+.card-header {
   width: 100%;
   padding: $padding-s $padding-s $padding-xs $padding-s;
   display: flex;
@@ -24,7 +20,7 @@
   }
 }
 
-.mat-mdc-card-content {
+.card-content {
   width: 100%;
   padding: $padding-xs $padding-s $padding-s $padding-s;
 

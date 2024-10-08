@@ -1,16 +1,12 @@
-<mat-card class="product-list-card" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title class="product-brand">{{
-      product.brand ?? 'No Brand'
-    }}</mat-card-title>
+<div class="flex flex-col rounded border">
+  <div class="card-header">
+    <h3 class="product-brand">{{ product.brand ?? 'No Brand' }}</h3>
     <div class="product-title-wrapper">
-      <mat-card-subtitle class="product-title">{{
-        product.title
-      }}</mat-card-subtitle>
+      <h4 class="product-title">{{ product.title }}</h4>
     </div>
-  </mat-card-header>
+  </div>
 
-  <mat-card-content>
+  <div class="card-content">
     <div class="image-wrapper">
       @defer {
         <img
@@ -34,5 +30,5 @@
     <div class="product-price-wrapper">
       <p class="product-price">${{ product.price }}</p>
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>
