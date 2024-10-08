@@ -41,7 +41,7 @@
     <h4>Tags</h4>
     <ul class="product-details-tag-list">
       @for (tag of productDetails()?.tags ?? []; let idx = $index; track idx) {
-        <mat-chip class="product-details-tag">{{ tag }}</mat-chip>
+        <li class="bg-slate-200 text-slate-800 rounded-md px-2">{{ tag }}</li>
       }
     </ul>
 

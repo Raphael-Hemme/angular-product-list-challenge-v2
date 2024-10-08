@@ -9,7 +9,6 @@ import {
 import { Subscription, tap } from 'rxjs';
 import { ProductDetailsService } from '../../../core/services/product-details/product-details.service';
 import { ProductDetailsData } from '../../../core/services/api/api.service';
-import { MatButtonModule } from '@angular/material/button';
 import { ProductDetailsComponent } from '../../components/product-details/product-details.component';
 import { NavigationService } from '../../../core/services/navigation/navigation.service';
 import { LoadingSpinnerComponent } from '../../../core/components/loading-spinner/loading-spinner.component';
@@ -20,12 +19,7 @@ import { ErrorUiComponent } from '../../../core/components/error-ui/error-ui.com
   selector: 'app-product-details-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    MatButtonModule,
-    ProductDetailsComponent,
-    LoadingSpinnerComponent,
-    ErrorUiComponent
-  ],
+  imports: [ProductDetailsComponent, LoadingSpinnerComponent, ErrorUiComponent],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss'
 })

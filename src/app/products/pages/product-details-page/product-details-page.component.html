@@ -7,11 +7,7 @@
     [productDetails]="productDetails"
     [retrievalError]="retrievalError"
   >
-    <button
-      class="back-btn"
-      (click)="navigateBackToProductListPage()"
-      mat-stroked-button
-    >
+    <button class="back-btn" (click)="navigateBackToProductListPage()">
       back
     </button>
   </app-product-details>
@@ -19,17 +15,12 @@
   <app-error-ui [errorMessage]="retrievalError">
     <button
       class="retry-btn"
-      mat-stroked-button
       (click)="retryLoadingProductDetails()"
       [disabled]="didRetryLoading"
     >
       retry
     </button>
-    <button
-      class="back-btn"
-      (click)="navigateBackToProductListPage()"
-      mat-stroked-button
-    >
+    <button class="back-btn" (click)="navigateBackToProductListPage()">
       back
     </button>
   </app-error-ui>
