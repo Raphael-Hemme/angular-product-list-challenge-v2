@@ -6,8 +6,6 @@ import {
   OnInit
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -22,7 +20,7 @@ import { NgClass } from '@angular/common';
   selector: 'app-search-form',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, MatIconModule, MatButtonModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './search-form.component.html',
   styleUrl: './search-form.component.scss'
 })

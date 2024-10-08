@@ -1,9 +1,8 @@
 <div class="search-form-container">
   <form [formGroup]="searchForm">
     <input
-      matInput
       id="search"
-      class="search-input"
+      class="search-input text-slate-800 dark:text-slate-100"
       type="search"
       formControlName="search"
       placeholder="Search for products"
@@ -17,11 +16,20 @@
             ? 'clear-btn-visible'
             : 'clear-btn-hidden'
         "
-        mat-icon-button
         aria-label="Clear search"
         (click)="clearSearch()"
       >
-        <mat-icon>close</mat-icon>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          class="fill-slate-800 dark:fill-slate-100"
+        >
+          <path
+            d="M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z"
+          />
+        </svg>
       </button>
     </div>
   </form>
