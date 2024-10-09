@@ -33,7 +33,8 @@ h1 {
     }
     .shop-title {
       display: none;
-      font-size: 2rem;
+      font-size: 1.5rem;
+      font-family: Playwrite, Roboto, sans-serif;
       color: $color-white;
       @media (min-width: $breakpoint-m) {
         display: block;

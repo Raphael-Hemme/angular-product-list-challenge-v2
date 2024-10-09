@@ -4,6 +4,21 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@font-face {
+  font-family: Roboto;
+  src: url('./../public/fonts/RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf');
+}
+
+@font-face {
+  font-family: Inconsolata;
+  src: url('./../public/fonts/Inconsolata-VariableFont_wdth,wght.ttf');
+}
+
+@font-face {
+  font-family: Playwrite;
+  src: url('./../public/fonts/PlaywriteCL-VariableFont_wght.ttf');
+}
+
 /* Angular Material specific styles */
 html,
 body {
