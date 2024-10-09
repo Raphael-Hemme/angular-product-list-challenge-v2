@@ -4,12 +4,21 @@
     alt="The Nullish Necissities logo"
   />
 
-  <h1>Nullish Necessities</h1>
-  <h2>You need them, but can't quite get them.</h2>
+  <h1 class="text-6xl mb-12">Nullish Necessities</h1>
+  <h2 class="text-2xl">You need them, but can't quite get them.</h2>
 
   <div class="splash-page-action-container">
     <app-search-form [isSplashPageSearch]="true"></app-search-form>
-    <button class="search-btn" (click)="handleSearchBtn()">search</button>
-    <a class="browse-product-list-link" routerLink="/products">browse</a>
+    <button
+      class="bg-teal-500 text-slate-100 p-2 w-44 rounded-xl uppercase flex justify-center"
+      (click)="handleSearchBtn()"
+    >
+      search
+    </button>
+    <a
+      class="bg-teal-500 text-slate-100 p-2 w-44 rounded-xl uppercase flex justify-center"
+      routerLink="/products"
+      >browse</a
+    >
   </div>
 </div>

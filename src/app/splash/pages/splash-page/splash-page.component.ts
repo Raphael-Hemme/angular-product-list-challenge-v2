@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SearchFormComponent } from '../../../products/components/search-form/search-form.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-splash-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SearchFormComponent],
+  imports: [SearchFormComponent, RouterLink],
   templateUrl: './splash-page.component.html',
   styleUrl: './splash-page.component.scss'
 })
