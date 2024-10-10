@@ -29,13 +29,6 @@ h2 {
     padding: $padding-l;
   }
 
-  img {
-    width: 70%;
-    @media (min-width: $breakpoint-m) {
-      width: 40vh;
-    }
-  }
-
   .splash-page-action-container {
     margin: 5rem 0 0 0;
     display: flex;
