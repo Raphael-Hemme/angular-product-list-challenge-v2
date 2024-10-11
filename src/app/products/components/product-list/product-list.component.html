@@ -1,4 +1,4 @@
-<div class="product-list-container">
+<div class="flex flex-col w-12/12 min-h-full overflow-scroll">
   @if (products().length > 0) {
     <ul class="product-list">
       @for (product of products(); track product.id) {
@@ -12,7 +12,7 @@
       }
     </ul>
   } @else {
-    <div class="product-list-empty-container">
+    <div class="flex flex-col justify-center items-center w-12/12 min-h-full">
       <p>¯\_(ツ)_/¯</p>
       <p>No products found please try another search term.</p>
     </div>

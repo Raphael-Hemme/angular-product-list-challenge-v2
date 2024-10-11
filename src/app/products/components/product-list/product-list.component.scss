@@ -1,13 +1,5 @@
 @import '../../../../styles/variables.scss';
 
-.poduct-list-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  overflow: scroll;
-}
-
 .product-list {
   display: grid;
   grid-gap: 10px;
@@ -18,15 +10,4 @@
     color: unset;
     cursor: pointer;
   }
-}
-
-.product-list-empty-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 50vh;
-  width: 100%;
-  border-radius: $border-radius;
-  font-size: 1.5rem;
 }

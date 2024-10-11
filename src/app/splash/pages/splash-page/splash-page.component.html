@@ -1,16 +1,19 @@
-<div class="splash-page-container page-container">
-  <a routerLink="/products">
+<div
+  class="splash-page-container page-container text-slate-100 flex flex-col justify-center items-center p"
+>
+  <a routerLink="/products" class="w-8/12 md:w-5/12 xl:w-3/12">
     <img
       src="public/images/nullish_necessities_06.svg"
       alt="The Nullish Necissities logo"
-      class="w-60 md:w-96"
     />
   </a>
 
-  <h1 class="text-6xl mb-12">Nullish Necessities</h1>
-  <h2 class="text-2xl">You need them, but can't quite get them.</h2>
+  <h1 class="text-6xl md:text-6xl mb-12 align-middle font-script">
+    Nullish Necessities
+  </h1>
+  <h2 class="text-2xl font-script">You need them, but can't quite get them.</h2>
 
-  <div class="splash-page-action-container">
+  <div class="mt-20 flex flex-col items-center justify-center gap-2">
     <div class="flex items-center gap-2">
       <app-search-form [isSplashPageSearch]="true"></app-search-form>
       <button

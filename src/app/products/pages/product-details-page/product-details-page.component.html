@@ -7,20 +7,26 @@
     [productDetails]="productDetails"
     [retrievalError]="retrievalError"
   >
-    <button class="back-btn" (click)="navigateBackToProductListPage()">
+    <button
+      class="bg-teal-500 text-slate-100 p-2 w-40 rounded-xl uppercase"
+      (click)="navigateBackToProductListPage()"
+    >
       back
     </button>
   </app-product-details>
 } @else {
   <app-error-ui [errorMessage]="retrievalError">
     <button
-      class="retry-btn"
+      class="bg-teal-500 text-slate-100 p-2 w-40 rounded-xl uppercase"
       (click)="retryLoadingProductDetails()"
       [disabled]="didRetryLoading"
     >
       retry
     </button>
-    <button class="back-btn" (click)="navigateBackToProductListPage()">
+    <button
+      class="bg-teal-500 text-slate-100 p-2 w-40 rounded-xl uppercase"
+      (click)="navigateBackToProductListPage()"
+    >
       back
     </button>
   </app-error-ui>
