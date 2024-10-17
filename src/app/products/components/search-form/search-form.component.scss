@@ -1,46 +1,8 @@
-@import '../../../../styles/variables.scss';
-
-.search-form-container form {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  padding: $padding-xs 0;
-  position: relative;
-
-  .search-input {
-    width: 100%;
-    padding: $padding-xs;
-    border-radius: $border-radius;
-    border: 1px solid $color-border;
-    font-size: 1rem;
-  }
-
+form {
   input[type='search']::-webkit-search-decoration,
   input[type='search']::-webkit-search-cancel-button,
   input[type='search']::-webkit-search-results-button,
   input[type='search']::-webkit-search-results-decoration {
     -webkit-appearance: none;
-  }
-
-  .clear-btn-wrapper {
-    width: 0;
-    height: 0;
-    .clear-btn-visible {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      position: relative;
-      // Not happy about the two magic numbers for left and top but they work for now.
-      left: -2.5rem;
-      top: -0.75rem;
-      z-index: 10;
-    }
-
-    .clear-btn-hidden {
-      display: none;
-    }
   }
 }

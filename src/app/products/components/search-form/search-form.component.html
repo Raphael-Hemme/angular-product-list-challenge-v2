@@ -1,21 +1,21 @@
-<div class="search-form-container flex justify-center">
-  <form [formGroup]="searchForm" class="flex justify-center">
+<div class="relative flex justify-center">
+  <form
+    [formGroup]="searchForm"
+    class="flex h-full w-full items-center justify-center py-2"
+  >
     <input
       id="search"
-      class="search-input text-slate-800 dark:text-slate-100"
+      class="w-full rounded-xl border border-slate-200 px-4 py-2 text-slate-800 dark:text-slate-100"
       type="search"
       formControlName="search"
       placeholder="Search for products"
       aria-label="Search"
     />
 
-    <div class="clear-btn-wrapper">
+    <div class="h-0 w-0">
       <button
-        [ngClass]="
-          searchForm.get('search')?.value
-            ? 'clear-btn-visible'
-            : 'clear-btn-hidden'
-        "
+        class="relative -left-9 -top-3 z-10 items-center justify-center"
+        [ngClass]="searchForm.get('search')?.value ? 'flex' : 'hidden'"
         aria-label="Clear search"
         (click)="clearSearch()"
       >
