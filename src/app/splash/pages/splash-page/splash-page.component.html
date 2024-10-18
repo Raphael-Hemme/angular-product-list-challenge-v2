@@ -3,21 +3,23 @@
 >
   <a routerLink="/products" class="w-8/12 md:w-5/12 xl:w-3/12">
     <img
-      src="public/images/nullish_necessities_06.svg"
+      src="public/images/nullish_necessities_07.svg"
       alt="The Nullish Necissities logo"
     />
   </a>
 
-  <h1 class="mb-12 align-middle font-script text-6xl md:text-6xl">
+  <h1 class="my-12 text-center font-script text-5xl md:text-6xl">
     Nullish Necessities
   </h1>
-  <h2 class="font-script text-2xl">You need them, but can't quite get them.</h2>
+  <h2 class="text-center font-script text-xl">
+    You need them, but can't quite get them.
+  </h2>
 
   <div class="mt-20 flex flex-col items-center justify-center gap-2">
     <div class="flex items-center gap-2">
       <app-search-form [isSplashPageSearch]="true"></app-search-form>
       <button
-        class="flex h-10 w-10 items-center justify-center rounded-full bg-teal-500 p-2 uppercase text-slate-100"
+        class="bg-primary flex h-10 w-10 items-center justify-center rounded-full p-2 uppercase text-slate-100"
         (click)="handleSearchBtn()"
       >
         <svg
@@ -37,7 +39,7 @@
       <span class="my-3">or</span>
       <span
         >just
-        <a class="p-1 text-teal-500 underline" routerLink="/products">browse</a>
+        <a class="text-primary p-1 underline" routerLink="/products">browse</a>
         our catalog.</span
       >
     </p>
