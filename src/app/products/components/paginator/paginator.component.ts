@@ -61,8 +61,10 @@ export class PaginatorComponent {
 
     this.paginatorDisplayStr = computed(() => {
       const currStart = this.pageIndex() * PRODUCT_LIST_PAGE_SIZE + 1;
-      const currEnd =
-        this.pageIndex() * PRODUCT_LIST_PAGE_SIZE + PRODUCT_LIST_PAGE_SIZE;
+      const currEnd = Math.min(
+        this.pageIndex() * PRODUCT_LIST_PAGE_SIZE + PRODUCT_LIST_PAGE_SIZE,
+        this.length()
+      );
       return `${currStart} - ${currEnd} of ${this.length()}`;
     });
   }
