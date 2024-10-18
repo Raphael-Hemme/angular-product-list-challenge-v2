@@ -1,5 +1,5 @@
 <div
-  class="splash-page-container page-container text-slate-100 flex flex-col justify-center items-center p"
+  class="splash-page-container flex h-screen flex-col items-center justify-center text-slate-100"
 >
   <a routerLink="/products" class="w-8/12 md:w-5/12 xl:w-3/12">
     <img
@@ -8,16 +8,16 @@
     />
   </a>
 
-  <h1 class="text-6xl md:text-6xl mb-12 align-middle font-script">
+  <h1 class="mb-12 align-middle font-script text-6xl md:text-6xl">
     Nullish Necessities
   </h1>
-  <h2 class="text-2xl font-script">You need them, but can't quite get them.</h2>
+  <h2 class="font-script text-2xl">You need them, but can't quite get them.</h2>
 
   <div class="mt-20 flex flex-col items-center justify-center gap-2">
     <div class="flex items-center gap-2">
       <app-search-form [isSplashPageSearch]="true"></app-search-form>
       <button
-        class="bg-teal-500 text-slate-100 p-2 w-10 h-10 rounded-full uppercase flex justify-center items-center"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-teal-500 p-2 uppercase text-slate-100"
         (click)="handleSearchBtn()"
       >
         <svg
@@ -37,7 +37,7 @@
       <span class="my-3">or</span>
       <span
         >just
-        <a class="text-teal-500 p-1 underline" routerLink="/products">browse</a>
+        <a class="p-1 text-teal-500 underline" routerLink="/products">browse</a>
         our catalog.</span
       >
     </p>

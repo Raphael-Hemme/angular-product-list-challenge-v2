@@ -32,14 +32,14 @@ $breakpoint-m: 769px;
 $breakpoint-l: 1025px;
 $breakpoint-xl: 1201px;
 
-$product-list-header-height-s: calc(60px + 2 * #{$padding-xs});
+$product-list-header-height-s: calc(60px + 2 * #{$padding-xs}); // 76px
 $product-list-header-height-l: 125px;
 
 $product-list-page-margin-top-s: calc(
   #{$product-list-header-height-s} - #{$padding-l}
-);
+); // 44px
 $product-list-page-margin-top-l: calc(
   #{$product-list-header-height-l} - #{$padding-s}
-);
+); // 109px
 
 $header-height: calc(2rem + 2 * $padding-s);

@@ -1,21 +1,27 @@
-<section class="page-container">
-  <div class="paginator-and-search-wrapper">
-    <app-search-form></app-search-form>
-    <app-paginator></app-paginator>
+<section class="relative flex min-h-full flex-col">
+  <div
+    class="sticky top-16 z-10 flex flex-col items-stretch justify-center gap-4 bg-white py-2 md:flex-row md:items-center md:justify-between"
+  >
+    <app-search-form class="w-full md:w-1/2"></app-search-form>
+    <app-paginator class="w-full md:w-1/2"></app-paginator>
   </div>
-  <div class="product-list-wrapper">
+
+  <div class="flex flex-1 p-4 md:p-8">
     @if (isLoading()) {
-      <app-loading-spinner></app-loading-spinner>
+      <app-loading-spinner class="flex-1"></app-loading-spinner>
     }
 
     @if (!errorMsg()) {
       <app-product-list
         [products]="currProductList"
         [errorMsg]="errorMsg"
+        class="min-h-full flex-1"
       ></app-product-list>
     } @else {
-      <app-error-ui [errorMessage]="errorMsg">
-        <button (click)="retryLoadingProducts()">retry</button>
+      <app-error-ui [errorMessage]="errorMsg" class="min-h-full">
+        <button class="uppercase" (click)="retryLoadingProducts()">
+          retry
+        </button>
       </app-error-ui>
     }
   </div>
