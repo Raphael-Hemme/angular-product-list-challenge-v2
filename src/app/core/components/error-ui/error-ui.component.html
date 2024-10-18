@@ -1,9 +1,11 @@
-<section class="error-container bg-blue-700 text-slate-100">
-  <h2>Error</h2>
-  <p>Sorry. There has been an error:</p>
-  <p>{{ errorMessage() }}</p>
+<section
+  class="flex h-full flex-1 flex-col items-center justify-center bg-blue-700 text-slate-100"
+>
+  <h2 class="mb-8 font-console text-6xl">Error</h2>
+  <p class="mb-2 font-console text-lg">Sorry. There has been an error:</p>
+  <p class="font-console text-lg">{{ errorMessage() }}</p>
 
-  <div class="action-container">
+  <div class="mt-4 flex items-center justify-center gap-4 py-8">
     <ng-content></ng-content>
   </div>
 </section>

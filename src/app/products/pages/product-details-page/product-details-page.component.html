@@ -8,7 +8,7 @@
     [retrievalError]="retrievalError"
   >
     <button
-      class="bg-teal-500 text-slate-100 p-2 w-40 rounded-xl uppercase"
+      class="w-40 rounded-xl bg-teal-500 p-2 uppercase text-slate-100"
       (click)="navigateBackToProductListPage()"
     >
       back
@@ -17,14 +17,14 @@
 } @else {
   <app-error-ui [errorMessage]="retrievalError">
     <button
-      class="bg-teal-500 text-slate-100 p-2 w-40 rounded-xl uppercase"
+      class="w-40 rounded-xl bg-teal-500 p-2 uppercase text-slate-100"
       (click)="retryLoadingProductDetails()"
       [disabled]="didRetryLoading"
     >
       retry
     </button>
     <button
-      class="bg-teal-500 text-slate-100 p-2 w-40 rounded-xl uppercase"
+      class="w-40 rounded-xl bg-teal-500 p-2 uppercase text-slate-100"
       (click)="navigateBackToProductListPage()"
     >
       back
