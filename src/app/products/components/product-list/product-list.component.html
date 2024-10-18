@@ -1,18 +1,16 @@
-<div class="product-list-container">
+<div class="w-12/12 flex min-h-full flex-col overflow-scroll">
   @if (products().length > 0) {
-    <ul class="product-list">
+    <ul
+      class="product-list grid grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-3"
+    >
       @for (product of products(); track product.id) {
-        <a
-          [routerLink]="['/product']"
-          [queryParams]="{ id: product.id }"
-          class="product-list-entry-link"
-        >
+        <a [routerLink]="['/product']" [queryParams]="{ id: product.id }">
           <app-product-list-entry [product]="product"></app-product-list-entry
         ></a>
       }
     </ul>
   } @else {
-    <div class="product-list-empty-container">
+    <div class="w-12/12 flex flex-1 flex-col items-center justify-center">
       <p>¯\_(ツ)_/¯</p>
       <p>No products found please try another search term.</p>
     </div>

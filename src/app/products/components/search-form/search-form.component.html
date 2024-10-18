@@ -1,27 +1,35 @@
-<div class="search-form-container">
-  <form [formGroup]="searchForm">
+<div class="relative flex justify-center pl-4 pr-4 md:pl-8 md:pr-0">
+  <form
+    [formGroup]="searchForm"
+    class="flex h-full w-full items-center justify-center"
+  >
     <input
-      matInput
       id="search"
-      class="search-input"
+      class="w-full rounded-xl border border-slate-200 px-4 py-2 text-slate-800 dark:text-slate-100"
       type="search"
       formControlName="search"
       placeholder="Search for products"
       aria-label="Search"
     />
 
-    <div class="clear-btn-wrapper">
+    <div class="h-0 w-0">
       <button
-        [ngClass]="
-          searchForm.get('search')?.value
-            ? 'clear-btn-visible'
-            : 'clear-btn-hidden'
-        "
-        mat-icon-button
+        class="relative -left-9 -top-3 z-10 items-center justify-center"
+        [ngClass]="searchForm.get('search')?.value ? 'flex' : 'hidden'"
         aria-label="Clear search"
         (click)="clearSearch()"
       >
-        <mat-icon>close</mat-icon>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          class="fill-slate-800 dark:fill-slate-100"
+        >
+          <path
+            d="M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z"
+          />
+        </svg>
       </button>
     </div>
   </form>

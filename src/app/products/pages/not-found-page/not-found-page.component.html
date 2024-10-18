@@ -1,6 +1,9 @@
-<section class="page-container not-found-page-container">
+<section class="h-full">
   <app-error-ui [errorMessage]="errorMessage">
-    <button mat-stroked-button (click)="navigateBackToProductList()">
+    <button
+      (click)="navigateBackToProductList()"
+      class="w-40 rounded-xl bg-teal-500 p-2 uppercase text-slate-100"
+    >
       back
     </button>
   </app-error-ui>

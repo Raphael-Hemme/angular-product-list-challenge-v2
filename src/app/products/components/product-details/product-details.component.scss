@@ -1,18 +1,5 @@
-@import '../../../../styles/variables';
-
-h2,
-h3 {
-  margin: 0;
-}
-
-button {
-  text-transform: uppercase;
-}
-
 .product-details-container {
   display: grid;
-  width: 100%;
-  height: 100%;
   grid-template-columns: 1fr;
   /* prettier-ignore */
   grid-template-rows: minmax(40px, max-content) minmax(60px, max-content) minmax(60px, max-content) minmax(40px, max-content) 4fr minmax(60px, max-content);
@@ -23,28 +10,18 @@ button {
     'price-and-status'
     'image'
     'various-details';
-  gap: $gap-s;
 
-  @media (min-width: $breakpoint-m) {
-    height: calc(100vh - 2 * $padding-l);
+  @media (min-width: 769px) {
     grid-template-columns: 2fr 1fr;
     grid-template-rows: minmax(60px, max-content) minmax(60px, max-content) 1fr;
     grid-template-areas:
       'brand back-btn'
       'title price-and-status'
       'image various-details';
-    gap: $gap-s;
   }
 
   .back-btn-wrapper {
     grid-area: back-btn;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
-    .back-btn {
-      text-transform: uppercase;
-    }
   }
 
   .product-details-brand {
@@ -57,49 +34,13 @@ button {
 
   .product-details-price-and-status-container {
     grid-area: price-and-status;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: $gap-l;
-
-    .product-details-price {
-      color: $color-success;
-      margin: 0;
-    }
-
-    .product-details-status {
-      margin: 0;
-    }
   }
 
   .product-details-image-container {
     grid-area: image;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    border: 1px solid $color-border;
-    border-radius: $border-radius;
   }
 
   .various-details-container {
     grid-area: various-details;
-
-    .product-details-tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-  }
-}
-
-.product-details-error {
-  font-size: 1rem;
-
-  .action-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: $gap-s;
   }
 }

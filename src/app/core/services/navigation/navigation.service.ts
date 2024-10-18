@@ -28,8 +28,6 @@ export class NavigationService {
         filter((event) => event instanceof NavigationEnd),
         tap((event) => {
           this.isOnSplashPage.set(event.url === '/');
-          console.log(event);
-          console.log(this.isOnSplashPage());
         })
       )
       .subscribe();

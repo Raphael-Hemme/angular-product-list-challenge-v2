@@ -17,7 +17,6 @@ import { SearchFormComponent } from '../../components/search-form/search-form.co
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { LoadingSpinnerComponent } from '../../../core/components/loading-spinner/loading-spinner.component';
 import { ErrorUiComponent } from '../../../core/components/error-ui/error-ui.component';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-list-page',
@@ -28,8 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
     SearchFormComponent,
     PaginatorComponent,
     LoadingSpinnerComponent,
-    ErrorUiComponent,
-    MatButtonModule
+    ErrorUiComponent
   ],
   templateUrl: './product-list-page.component.html',
   styleUrl: './product-list-page.component.scss'

@@ -1,20 +1,15 @@
-<mat-card class="product-list-card" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title class="product-brand">{{
-      product.brand ?? 'No Brand'
-    }}</mat-card-title>
-    <div class="product-title-wrapper">
-      <mat-card-subtitle class="product-title">{{
-        product.title
-      }}</mat-card-subtitle>
-    </div>
-  </mat-card-header>
+<div class="flex flex-col rounded-xl border">
+  <div class="flex w-full flex-col p-4">
+    <h3 class="w-full text-2xl">{{ product.brand ?? 'No Brand' }}</h3>
+    <h4 class="w-full overflow-hidden text-ellipsis text-nowrap text-xl">
+      {{ product.title }}
+    </h4>
+  </div>
 
-  <mat-card-content>
-    <div class="image-wrapper">
+  <div class="w-full">
+    <div class="flex w-full items-center justify-center">
       @defer {
         <img
-          mat-card-image
           [ngSrc]="product.thumbnail"
           [width]="300"
           [height]="300"
@@ -24,15 +19,14 @@
         <app-skeleton width="300px" height="300px"></app-skeleton>
       }
     </div>
-    <p class="product-description">
+    <p class="max-h-16 min-h-16 p-4">
       {{
         product.description.length > productDescriptionCutOff
           ? product.description.substring(0, productDescriptionCutOff) + '...'
           : product.description
       }}
     </p>
-    <div class="product-price-wrapper">
-      <p class="product-price">${{ product.price }}</p>
-    </div>
-  </mat-card-content>
-</mat-card>
+
+    <p class="flex justify-end p-4 font-bold">${{ product.price }}</p>
+  </div>
+</div>

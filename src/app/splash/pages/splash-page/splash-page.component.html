@@ -1,19 +1,47 @@
-<div class="splash-page-container page-container">
-  <img
-    src="public/images/nullish_necessities_06.svg"
-    alt="The Nullish Necissities logo"
-  />
+<div
+  class="splash-page-container flex h-screen flex-col items-center justify-center text-slate-100"
+>
+  <a routerLink="/products" class="w-8/12 md:w-5/12 xl:w-3/12">
+    <img
+      src="public/images/nullish_necessities_07.svg"
+      alt="The Nullish Necissities logo"
+    />
+  </a>
 
-  <h1>Nullish Necessities</h1>
-  <h2>You need them, but can't quite get them.</h2>
+  <h1 class="my-12 text-center font-script text-5xl md:text-6xl">
+    Nullish Necessities
+  </h1>
+  <h2 class="text-center font-script text-xl">
+    You need them, but can't quite get them.
+  </h2>
 
-  <div class="splash-page-action-container">
-    <app-search-form [isSplashPageSearch]="true"></app-search-form>
-    <button class="search-btn" (click)="handleSearchBtn()" mat-flat-button>
-      search
-    </button>
-    <a class="browse-product-list-link" routerLink="/products" mat-flat-button
-      >browse</a
-    >
+  <div class="mt-20 flex flex-col items-center justify-center gap-2">
+    <div class="flex items-center gap-2">
+      <app-search-form [isSplashPageSearch]="true"></app-search-form>
+      <button
+        class="bg-primary flex h-10 w-10 items-center justify-center rounded-full p-2 uppercase text-slate-100"
+        (click)="handleSearchBtn()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#e8eaed"
+        >
+          <path
+            d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z"
+          />
+        </svg>
+      </button>
+    </div>
+    <p class="flex flex-col items-center">
+      <span class="my-3">or</span>
+      <span
+        >just
+        <a class="text-primary p-1 underline" routerLink="/products">browse</a>
+        our catalog.</span
+      >
+    </p>
   </div>
 </div>

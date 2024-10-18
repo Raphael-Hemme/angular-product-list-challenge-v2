@@ -6,12 +6,13 @@ import {
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './core/components/header/header.component';
 import { NavigationService } from './core/services/navigation/navigation.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, NgClass],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

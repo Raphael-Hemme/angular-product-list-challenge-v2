@@ -1,6 +1,10 @@
-@if (!isOnSplashPage()) {
-  <app-header></app-header>
-}
-<main>
-  <router-outlet />
-</main>
+<div class="flex min-h-screen flex-col">
+  @if (!isOnSplashPage()) {
+    <app-header class="fixed top-0 z-20 w-full"></app-header>
+  }
+  <main class="flex flex-1" [ngClass]="!isOnSplashPage() ? 'mt-16' : ''">
+    <div class="min-h-full flex-1">
+      <router-outlet />
+    </div>
+  </main>
+</div>

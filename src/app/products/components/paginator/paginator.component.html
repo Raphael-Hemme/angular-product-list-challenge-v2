@@ -1,13 +1,93 @@
-<mat-paginator
-  #paginator
-  class="demo-paginator"
-  (page)="handlePageEvent($event)"
-  [length]="length()"
-  [pageSize]="pageSize"
-  [disabled]="disabled"
-  [showFirstLastButtons]="true"
-  [hidePageSize]="true"
-  [pageIndex]="pageIndex()"
-  aria-label="Select page"
+<div
+  class="flex items-center justify-start gap-7 bg-white pl-4 pr-4 md:justify-end md:pl-0 md:pr-8 dark:bg-slate-800"
 >
-</mat-paginator>
+  <p
+    aria-lable="Pagination current page display"
+    class="m-0 text-xs font-light text-slate-800 dark:text-slate-100"
+  >
+    {{ paginatorDisplayStr() }}
+  </p>
+  <nav aria-label="Pagination navigation">
+    <ul class="flex items-center gap-3">
+      <li aria-label="First page control">
+        <button
+          [disabled]="firstPageIsDisabled()"
+          (click)="handleFirstPageBtn()"
+          class="flex items-center justify-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            class="fill-slate-800 dark:fill-slate-100"
+          >
+            <path
+              d="M250-250v-460h60v460h-60Zm430-3.85L453.85-480 680-706.15 722.15-664l-184 184 184 184L680-253.85Z"
+            />
+          </svg>
+        </button>
+      </li>
+
+      <li aria-label="Previous page control">
+        <button
+          [disabled]="prevPageIsDisabled()"
+          (click)="handlePrevPageBtn()"
+          class="flex items-center justify-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            class="fill-slate-800 dark:fill-slate-100"
+          >
+            <path
+              d="M560-253.85 333.85-480 560-706.15 602.15-664l-184 184 184 184L560-253.85Z"
+            />
+          </svg>
+        </button>
+      </li>
+
+      <li aria-label="Next page control">
+        <button
+          [disabled]="nextPageIsDisabled()"
+          (click)="handleNextPageBtn()"
+          class="flex items-center justify-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            class="fill-slate-800 dark:fill-slate-100"
+          >
+            <path
+              d="m517.85-480-184-184L376-706.15 602.15-480 376-253.85 333.85-296l184-184Z"
+            />
+          </svg>
+        </button>
+      </li>
+
+      <li aria-label="Last page control">
+        <button
+          [disabled]="lastPageIsDisabled()"
+          (click)="handleLastPageBtn()"
+          class="flex items-center justify-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            class="fill-slate-800 dark:fill-slate-100"
+          >
+            <path
+              d="M280-253.85 237.85-296l184-184-184-184L280-706.15 506.15-480 280-253.85ZM650-250v-460h60v460h-60Z"
+            />
+          </svg>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
