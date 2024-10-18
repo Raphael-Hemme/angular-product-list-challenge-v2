@@ -1,5 +1,3 @@
-@import '../../../../styles/variables';
-
 .product-details-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -13,7 +11,7 @@
     'image'
     'various-details';
 
-  @media (min-width: $breakpoint-m) {
+  @media (min-width: 769px) {
     grid-template-columns: 2fr 1fr;
     grid-template-rows: minmax(60px, max-content) minmax(60px, max-content) 1fr;
     grid-template-areas:

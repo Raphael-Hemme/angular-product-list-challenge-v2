@@ -1,21 +1,12 @@
-@import '../../../../styles/variables';
-
-$combined-header-height-l: calc($header-height + $product-list-header-height-l);
-$combined-header-height-s: calc($header-height + $product-list-header-height-s);
+$combined-header-height-l: 189px;
+$combined-header-height-s: 140px;
 
 .loading-container {
   height: calc(100vh - $combined-header-height-l);
-  width: 100vw;
-  position: absolute;
   top: $combined-header-height-l;
-  left: 0;
-  z-index: 20;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $color-white;
+  background-color: white;
 
-  @media (min-width: $breakpoint-m) {
+  @media (min-width: 769px) {
     height: calc(100vh - $combined-header-height-s);
     top: $combined-header-height-s;
   }
@@ -23,7 +14,7 @@ $combined-header-height-s: calc($header-height + $product-list-header-height-s);
   .loader {
     width: 200px; /* the size */
     padding: 15px; /* the border thickness */
-    background: $color-primary;
+    background: rgba(104, 192, 210, 1);
 
     aspect-ratio: 1;
     border-radius: 50%;

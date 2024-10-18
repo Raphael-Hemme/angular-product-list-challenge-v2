@@ -1,14 +1,12 @@
-@import '../../../../styles/variables.scss';
-
 @keyframes backgroundColorChange {
   0% {
-    background-color: $color-skeleton-1;
+    background-color: rgb(228, 228, 228);
   }
   50% {
-    background-color: $color-skeleton-2;
+    background-color: rgb(210, 210, 210);
   }
   100% {
-    background-color: $color-skeleton-1;
+    background-color: rgb(228, 228, 228);
   }
 }
 
