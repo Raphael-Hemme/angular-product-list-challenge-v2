@@ -6,8 +6,7 @@ import {
 } from '@angular/core';
 import {
   PRODUCT_LIST_PAGE_SIZE,
-  ProductListService,
-  TOTAL_REGULAR_LIST_LENGTH
+  ProductListService
 } from '../../../core/services/product-list/product-list.service';
 import { Router } from '@angular/router';
 
@@ -36,7 +35,7 @@ export class PaginatorComponent {
     private readonly router: Router
   ) {
     this.pageIndex = computed(
-      () => this.productListServece.currPageSharedPageNumber() - 1
+      () => this.productListServece.currSharedPageNumber() - 1
     );
     this.length = this.productListServece.totalListLength;
 

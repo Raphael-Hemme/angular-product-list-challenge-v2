@@ -57,7 +57,7 @@ export class NavigationService {
 
   public navigateBackToProductListPage(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: this.productListService.currRegularPageNumber() }
+      queryParams: { page: this.productListService.currSharedPageNumber() }
     });
     this.productDetailsService.clearDisplayedProductDetails();
   }

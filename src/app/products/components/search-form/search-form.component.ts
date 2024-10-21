@@ -13,8 +13,9 @@ import {
   Subscription,
   tap
 } from 'rxjs';
-import { ProductListService } from '../../../core/services/product-list/product-list.service';
 import { NgClass } from '@angular/common';
+import { ProductListSearchService } from '../../../core/services/product-list-search/product-list-search.service';
+import { ProductListService } from '../../../core/services/product-list/product-list.service';
 
 @Component({
   selector: 'app-search-form',
@@ -32,11 +33,12 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   private searchSub: Subscription = new Subscription();
 
   constructor(
-    private fb: FormBuilder,
-    private readonly productListService: ProductListService
+    private readonly fb: FormBuilder,
+    private readonly productListService: ProductListService,
+    private readonly productListSearchService: ProductListSearchService
   ) {
     this.searchForm = this.fb.group({
-      search: [this.productListService.currSearchTerm()]
+      search: [this.productListSearchService.currSearchTerm()]
     });
   }
 
@@ -53,11 +55,11 @@ export class SearchFormComponent implements OnInit, OnDestroy {
           // is emptied with the keyboard and not with the clear button.
           tap((value) => {
             if (value.length === 0) {
-              this.productListService.clearSearchResults();
+              this.productListSearchService.clearSearchResults();
             }
           }),
           filter((value) => value.length > 0),
-          tap((value) => this.productListService.currSearchTerm.set(value)),
+          tap((value) => this.productListSearchService.currSearchTerm.set(value)),
           tap((value) => this.searchProducts(value))
         )
         .subscribe()
@@ -73,10 +75,13 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   public clearSearch(): void {
     this.searchForm!.get('search')!.setValue('');
-    this.productListService.clearSearchResults();
+    this.productListSearchService.clearSearchResults();
+    this.productListService.changeMode('RAW');
   }
 
   private searchProducts(searchTerm: string): void {
-    this.productListService.searchProducts(searchTerm);
+    this.productListService.changeMode('SEARCH');
+    console.log('searching for: ', searchTerm);
+    this.productListSearchService.searchProducts(searchTerm);
   }
 }
