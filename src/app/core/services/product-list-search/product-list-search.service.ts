@@ -10,7 +10,7 @@ import { LoadingService } from '../loading/loading.service';
 })
 export class ProductListSearchService {
   public currSearchTerm = signal<string>('');
-  public searchResults = signal<ProductListEntryData[][]>([]);
+  public searchResults = signal<ProductListEntryData[][]>([[]]);
   public currSearchPageNumber = signal<number>(1);
 
   public retrievalError = signal<string | null>(null);
@@ -39,14 +39,16 @@ export class ProductListSearchService {
   }
 
   public clearSearchResults(): void {
-    this.searchResults.set([]);
-    this.retrievalError.set(null);
     this.currSearchTerm.set('');
+    this.searchResults.set([[]]);
+    this.retrievalError.set(null);
+    this.currSearchPageNumber.set(1);
   }
 
   private chunkSearchResultsIntoPages(
     searchResults: ProductListEntryData[]
   ): ProductListEntryData[][] {
+    console.log(searchResults);
     const chunkedSearchResults = [];
     for (let i = 0; i < searchResults.length; i += PRODUCT_LIST_PAGE_SIZE) {
       const chunk = searchResults.slice(i, i + PRODUCT_LIST_PAGE_SIZE);

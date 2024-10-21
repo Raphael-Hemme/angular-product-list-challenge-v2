@@ -22,6 +22,7 @@ export class PaginatorComponent {
   public length!: Signal<number>;
   public pageSize = PRODUCT_LIST_PAGE_SIZE;
   public disabled = false;
+  public pageNumber!: Signal<number>;
   public pageIndex!: Signal<number>;
 
   public firstPageIsDisabled!: Signal<boolean>;
@@ -34,13 +35,15 @@ export class PaginatorComponent {
     private productListServece: ProductListService,
     private readonly router: Router
   ) {
-    this.pageIndex = computed(
-      () => this.productListServece.currSharedPageNumber() - 1
-    );
+    this.pageNumber = computed(() => {
+      return this.productListServece.currSharedPageNumber();
+    });
+
+    this.pageIndex = computed(() => this.pageNumber() - 1);
+
     this.length = this.productListServece.totalListLength;
 
     this.firstPageIsDisabled = computed(() => {
-      console.log('this.pageIndex():', this.pageIndex());
       return this.pageIndex() === 0;
     });
 
@@ -83,13 +86,13 @@ export class PaginatorComponent {
 
   public handlePrevPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: this.pageIndex() - 1 }
+      queryParams: { page: this.pageNumber() - 1 }
     });
   }
 
   public handleNextPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: this.pageIndex() + 2 }
+      queryParams: { page: this.pageNumber() + 1 }
     });
   }
 }

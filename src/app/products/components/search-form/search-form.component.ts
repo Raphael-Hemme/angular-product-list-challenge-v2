@@ -54,11 +54,11 @@ export class SearchFormComponent implements OnInit, OnDestroy {
           // The following side effect is used to clear the search results when the search input
           // is emptied with the keyboard and not with the clear button.
           tap((value) => {
-            if (value.length === 0) {
-              this.productListSearchService.clearSearchResults();
+            if (!value || value.length === 0) {
+              this.clearSearch();
             }
           }),
-          filter((value) => value.length > 0),
+          filter((value) => value && value.length > 0),
           tap((value) => this.productListSearchService.currSearchTerm.set(value)),
           tap((value) => this.searchProducts(value))
         )
@@ -81,7 +81,6 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   private searchProducts(searchTerm: string): void {
     this.productListService.changeMode('SEARCH');
-    console.log('searching for: ', searchTerm);
     this.productListSearchService.searchProducts(searchTerm);
   }
 }

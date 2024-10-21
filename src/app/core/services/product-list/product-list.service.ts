@@ -51,7 +51,8 @@ export class ProductListService {
     this.totalListLength = computed(() => {
       switch (this.listMode()) {
         case 'SEARCH':
-          return this.currDisplayedProductList().flat().length;
+          console.log(this.currDisplayedProductList());
+          return this.currDisplayedProductList()?.flat()?.length;
         default: // RAW
           return TOTAL_REGULAR_LIST_LENGTH;
       }
