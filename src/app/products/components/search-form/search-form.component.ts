@@ -77,6 +77,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     this.searchForm!.get('search')!.setValue('');
     this.productListSearchService.clearSearchResults();
     this.productListService.changeMode('RAW');
+    // this.productListService.updateCurrPageNumber();
   }
 
   private searchProducts(searchTerm: string): void {

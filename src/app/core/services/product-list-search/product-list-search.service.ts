@@ -48,7 +48,6 @@ export class ProductListSearchService {
   private chunkSearchResultsIntoPages(
     searchResults: ProductListEntryData[]
   ): ProductListEntryData[][] {
-    console.log(searchResults);
     const chunkedSearchResults = [];
     for (let i = 0; i < searchResults.length; i += PRODUCT_LIST_PAGE_SIZE) {
       const chunk = searchResults.slice(i, i + PRODUCT_LIST_PAGE_SIZE);

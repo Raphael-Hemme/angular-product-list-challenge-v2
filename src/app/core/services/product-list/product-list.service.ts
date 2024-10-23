@@ -51,15 +51,16 @@ export class ProductListService {
     this.totalListLength = computed(() => {
       switch (this.listMode()) {
         case 'SEARCH':
-          console.log(this.currDisplayedProductList());
-          return this.currDisplayedProductList()?.flat()?.length;
+          return this.productListSearchService.searchResults()?.flat()?.length;
         default: // RAW
           return TOTAL_REGULAR_LIST_LENGTH;
       }
     });
   }
 
-  public updateCurrPageNumber(newPageNumber: number): void {
+  public updateCurrPageNumber(
+    newPageNumber: number //  = this.currSharedPageNumber()
+  ): void {
     if (this.listMode() === 'SEARCH') {
       this.productListSearchService.currSearchPageNumber.set(newPageNumber);
     } else {
