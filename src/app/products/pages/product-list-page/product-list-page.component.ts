@@ -58,7 +58,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pageQueryParamsSub.add(
       this.navigationService
-        .handlePageQueryParams()
+        .handleQueryParamsForProductListPage()
         .pipe(
           tap((pageNumber) => {
             this.pageNumber.set(pageNumber);

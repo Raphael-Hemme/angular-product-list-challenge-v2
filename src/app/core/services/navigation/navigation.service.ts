@@ -33,8 +33,14 @@ export class NavigationService {
       .subscribe();
   }
 
-  public handlePageQueryParams(): Observable<number> {
+  public handleQueryParamsForProductListPage(): Observable<number> {
     return this.route.queryParams.pipe(
+      tap((params: Params) => {
+        console.log(params);
+        if (params['search']) {
+          this.productListService.searchProducts(params['search']);
+        }
+      }),
       // prettier-ignore
       map((params): MappedValuesForQueryParams => this.mapPageQueryParams(params)),
       // prettier-ignore
@@ -43,7 +49,7 @@ export class NavigationService {
     );
   }
 
-  public handleProductIdQueryParams(): Observable<number> {
+  public handleQueryParamsForProductDetailsPage(): Observable<number> {
     return this.route.queryParams.pipe(
       map((params: Params) => (params['id'] ? +params['id'] : null)),
       tap((productId) => {
@@ -60,6 +66,23 @@ export class NavigationService {
       queryParams: { page: this.productListService.currSharedPageNumber() }
     });
     this.productDetailsService.clearDisplayedProductDetails();
+  }
+
+  public navigateToSearchUrl(searchTerm: string): void {
+    this.router.navigate(['/products'], {
+      queryParams: {
+        page: 1,
+        search: searchTerm
+      }
+    });
+  }
+
+  public resetUrlFromSearchToDefaultMode(): void {
+    this.router.navigate(['/products'], {
+      queryParams: {
+        page: this.productListService.currSharedPageNumber()
+      }
+    });
   }
 
   private handleSideEffectsForPageQueryParams(
@@ -95,6 +118,6 @@ export class NavigationService {
   }
 
   private pageNumberIsValid(pageNumber: number): boolean {
-    return pageNumber > 0 && pageNumber <= TOTAL_REGULAR_PAGES;
+    return pageNumber > 0 && pageNumber <= TOTAL_REGULAR_PAGES; // Todo: This needs to be changed into a dynamic value that also works with the actual lenght of e.g. the search result list
   }
 }

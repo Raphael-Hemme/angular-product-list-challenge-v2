@@ -71,4 +71,9 @@ export class ProductListService {
   public changeMode(mode: ListMode): void {
     this.listMode.set(mode);
   }
+
+  public searchProducts(searchTerm: string): void {
+    this.productListSearchService.searchProducts(searchTerm);
+    this.changeMode('SEARCH');
+  }
 }

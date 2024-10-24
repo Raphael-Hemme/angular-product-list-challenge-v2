@@ -9,6 +9,7 @@ import {
   ProductListService
 } from '../../../core/services/product-list/product-list.service';
 import { Router } from '@angular/router';
+import { ProductListSearchService } from '../../../core/services/product-list-search/product-list-search.service';
 
 @Component({
   selector: 'app-paginator',
@@ -32,7 +33,8 @@ export class PaginatorComponent {
   public paginatorDisplayStr!: Signal<string>;
 
   constructor(
-    private productListServece: ProductListService,
+    private readonly productListServece: ProductListService,
+    private readonly productListSearchService: ProductListSearchService,
     private readonly router: Router
   ) {
     this.pageNumber = computed(() => {
@@ -73,26 +75,44 @@ export class PaginatorComponent {
 
   public handleFirstPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: 1 }
+      queryParams: {
+        page: 1,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
   }
 
   public handleLastPageBtn(): void {
-    const lastPage = Math.ceil(this.length() / PRODUCT_LIST_PAGE_SIZE);
+    const lastPage = Math.ceil(this.length() / PRODUCT_LIST_PAGE_SIZE); // Todo: make dynamic and handle search list as well
     this.router.navigate(['/products'], {
-      queryParams: { page: lastPage }
+      queryParams: {
+        page: lastPage,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
   }
 
   public handlePrevPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: this.pageNumber() - 1 }
+      queryParams: {
+        page: this.pageNumber() - 1,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
   }
 
   public handleNextPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: this.pageNumber() + 1 }
+      queryParams: {
+        page: this.pageNumber() + 1,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
+  }
+
+  private getCurrSearchTermOrNull(): string | null {
+    return this.productListSearchService.currSearchTerm()
+      ? this.productListSearchService.currSearchTerm()
+      : null;
   }
 }
