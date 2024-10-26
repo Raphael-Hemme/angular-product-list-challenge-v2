@@ -58,6 +58,7 @@ export class SearchFormComponent implements OnInit, AfterViewInit, OnDestroy {
           // is emptied with the keyboard and not with the clear button.
           tap((value) => {
             if (!value || value.length === 0) {
+              this.navigationService.resetUrlFromSearchToDefaultMode();
               this.clearSearch();
             }
           }),
@@ -86,7 +87,6 @@ export class SearchFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.searchForm!.get('search')!.setValue('');
     this.productListSearchService.clearSearchResults();
     this.productListService.changeMode('RAW');
-    this.navigationService.resetUrlFromSearchToDefaultMode();
   }
 
   private triggerSearchNavigation(searchTerm: string): void {
