@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
@@ -27,7 +26,7 @@ import { NavigationService } from '../../../core/services/navigation/navigation.
   templateUrl: './search-form.component.html',
   styleUrl: './search-form.component.scss'
 })
-export class SearchFormComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SearchFormComponent implements OnInit, OnDestroy {
   @Input() isSplashPageSearch = false;
 
   public searchForm!: FormGroup;
@@ -46,34 +45,10 @@ export class SearchFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.searchSub.add(
-      // prettier-ignore
-      this.searchForm!.get('search')!.valueChanges
-        .pipe(
-          // prettier-ignore
-          debounceTime(500),
-          // prettier-ignore
-          distinctUntilChanged(),
-          // The following side effect is used to clear the search results when the search input
-          // is emptied with the keyboard and not with the clear button.
-          tap((value) => {
-            if (!value || value.length === 0) {
-              this.navigationService.resetUrlFromSearchToDefaultMode();
-              this.clearSearch();
-            }
-          }),
-          filter((value) => value && value.length > 0),
-          tap((value) => this.productListSearchService.currSearchTerm.set(value)),
-          tap((value) => this.triggerSearchNavigation(value))
-        )
-        .subscribe()
-    );
-  }
-
-  ngAfterViewInit(): void {
-    // Update the input once initially but after view initialization with the potentially
-    // available search tearm that was provided via query params and updated in the ProductListSearchService signal
+    // Update the input once initially with the potentially available search term
+    // provided via query params and updated in the ProductListSearchService signal
     this.updateSearchInput();
+    this.handleSearchValueChanges();
   }
 
   ngOnDestroy(): void {
@@ -89,15 +64,33 @@ export class SearchFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.productListService.changeMode('RAW');
   }
 
-  private triggerSearchNavigation(searchTerm: string): void {
-    this.navigationService.navigateToSearchUrl(searchTerm);
-  }
-
   private updateSearchInput(): void {
     const searchFormControl = this.searchForm.get('search');
     const currSearchTermValue = this.productListSearchService.currSearchTerm();
     if (!searchFormControl?.value && currSearchTermValue) {
       searchFormControl?.setValue(currSearchTermValue);
     }
+  }
+
+  private handleSearchValueChanges(): void {
+    this.searchSub.add(
+      // prettier-ignore
+      this.searchForm!.get('search')!.valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged(),
+          // The following side effect is used to clear the search results when the search input
+          // is emptied with the keyboard and not with the clear button.
+          tap((value) => {
+            if (!value || value.length === 0) {
+              this.navigationService.resetUrlFromSearchToDefaultMode();
+              this.clearSearch();
+            }
+          }),
+          filter((value) => value && value.length > 0),
+          tap((value) => this.navigationService.navigateToSearchUrl(value))
+        )
+        .subscribe()
+    );
   }
 }

@@ -23,10 +23,8 @@ export class ProductListSearchService {
   public searchProducts(searchTerm: string): void {
     this.currSearchTerm.update((prevSearchTerm: string) => {
       if ((!prevSearchTerm && searchTerm) || prevSearchTerm !== searchTerm) {
-        console.log('returning searchTerm: ', searchTerm);
         return searchTerm;
       } else {
-        console.log('returning prevSearchTerm: ', prevSearchTerm);
         return prevSearchTerm;
       }
     });

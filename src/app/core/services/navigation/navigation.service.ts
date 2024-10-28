@@ -36,7 +36,6 @@ export class NavigationService {
   public handleQueryParamsForProductListPage(): Observable<number> {
     return this.route.queryParams.pipe(
       tap((params: Params) => {
-        console.log(params);
         if (params['search']) {
           this.productListService.searchProducts(params['search']);
         }
