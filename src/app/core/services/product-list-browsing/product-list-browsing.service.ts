@@ -10,7 +10,7 @@ import { LoadingService } from '../loading/loading.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductListRawService {
+export class ProductListBrowsingService {
   public currRawPageNumber = signal<number>(1);
   public productListPagedCache = signal<ProductListEntryData[][]>(
     generateInitiallyEmptyProductListCache()

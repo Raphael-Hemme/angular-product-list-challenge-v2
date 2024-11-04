@@ -1,6 +1,6 @@
 import { computed, Injectable, Signal, signal } from '@angular/core';
 import { ProductListEntryData } from '../api/api.service';
-import { ProductListRawService } from '../product-list-raw/product-list-raw.service';
+import { ProductListBrowsingService } from '../product-list-browsing/product-list-browsing.service';
 import { ProductListSearchService } from '../product-list-search/product-list-search.service';
 
 export type ListMode = 'RAW' | 'SEARCH';
@@ -26,13 +26,13 @@ export class ProductListService {
   public maxTotalPages!: Signal<number>;
 
   constructor(
-    private readonly productListRawService: ProductListRawService,
+    private readonly productListBrowsingService: ProductListBrowsingService,
     private readonly productListSearchService: ProductListSearchService
   ) {
     this.currSharedPageNumber = computed(() =>
       this.listMode() === 'SEARCH'
         ? this.productListSearchService.currSearchPageNumber()
-        : this.productListRawService.currRawPageNumber()
+        : this.productListBrowsingService.currRawPageNumber()
     );
 
     this.currDisplayedProductList = computed<ProductListEntryData[]>(() => {
@@ -41,7 +41,7 @@ export class ProductListService {
           this.currSharedPageNumber() - 1
         ];
       } else {
-        return this.productListRawService.productListPagedCache()[
+        return this.productListBrowsingService.productListPagedCache()[
           this.currSharedPageNumber() - 1
         ];
       }
@@ -50,7 +50,7 @@ export class ProductListService {
     this.retrievalError = computed(() =>
       this.listMode() === 'SEARCH'
         ? this.productListSearchService.retrievalError()
-        : this.productListRawService.retrievalError()
+        : this.productListBrowsingService.retrievalError()
     );
 
     this.totalListLength = computed(() => {
@@ -76,7 +76,7 @@ export class ProductListService {
     if (this.listMode() === 'SEARCH') {
       this.productListSearchService.currSearchPageNumber.set(newPageNumber);
     } else {
-      this.productListRawService.loadPage(newPageNumber);
+      this.productListBrowsingService.loadPage(newPageNumber);
     }
   }
 
