@@ -1,10 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { filter, map, Observable, tap } from 'rxjs';
-import {
-  ProductListService,
-  TOTAL_REGULAR_PAGES
-} from '../product-list/product-list.service';
+import { ProductListService } from '../product-list/product-list.service';
 import { ProductDetailsService } from '../product-details/product-details.service';
 
 export const DEFAULT_PAGE_NUMBER = 1;
@@ -100,7 +97,13 @@ export class NavigationService {
   }
 
   private mapPageQueryParams(params: Params): MappedValuesForQueryParams {
-    if (params['page'] && this.pageNumberIsValid(+params['page'])) {
+    if (
+      params['page'] &&
+      this.pageNumberIsValid(
+        +params['page'],
+        this.productListService.maxTotalPages()
+      )
+    ) {
       return +params['page'];
     } else if (!params['page']) {
       return 'REDIRECT';
@@ -116,7 +119,21 @@ export class NavigationService {
     });
   }
 
-  private pageNumberIsValid(pageNumber: number): boolean {
-    return pageNumber > 0 && pageNumber <= TOTAL_REGULAR_PAGES; // Todo: This needs to be changed into a dynamic value that also works with the actual lenght of e.g. the search result list
+  /**
+   * Validates if the given page number is within the theoretically valid range.
+   * Theoritically because at the time of the routing and checking of the parameters, it is
+   * unclear if e.g. the default maximum number of search results (30) will be returned by a given
+   * search query and therfore with a default PRODUCT_LIST_PAGE_SIZE page 2 with the entries from 21 - 30
+   * will be a valid page number in search mode.
+   *
+   * @param pageNumber - The page number to validate.
+   * @param maxTotalPages - The maximum number of total pages.
+   * @returns `true` if the page number is greater than 0 and less than or equal to the maximum total pages, otherwise `false`.
+   */
+  private pageNumberIsValid(
+    pageNumber: number,
+    maxTotalPages: number
+  ): boolean {
+    return pageNumber > 0 && pageNumber <= maxTotalPages;
   }
 }

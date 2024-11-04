@@ -9,6 +9,10 @@ export const PRODUCT_LIST_PAGE_SIZE = 20;
 export const TOTAL_REGULAR_LIST_LENGTH = 200;
 export const TOTAL_REGULAR_PAGES =
   TOTAL_REGULAR_LIST_LENGTH / PRODUCT_LIST_PAGE_SIZE;
+export const MAX_TOTAL_SEARCH_LIST_LENGTH = 30;
+export const MAX_SEARCH_PAGES = Math.ceil(
+  MAX_TOTAL_SEARCH_LIST_LENGTH / PRODUCT_LIST_PAGE_SIZE
+);
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +23,7 @@ export class ProductListService {
   public retrievalError!: Signal<string | null>;
   public currSharedPageNumber!: Signal<number>;
   public totalListLength!: Signal<number>;
+  public maxTotalPages!: Signal<number>;
 
   constructor(
     private readonly productListRawService: ProductListRawService,
@@ -56,11 +61,18 @@ export class ProductListService {
           return TOTAL_REGULAR_LIST_LENGTH;
       }
     });
+
+    this.maxTotalPages = computed(() => {
+      switch (this.listMode()) {
+        case 'SEARCH':
+          return MAX_SEARCH_PAGES;
+        default: // RAW
+          return TOTAL_REGULAR_PAGES;
+      }
+    });
   }
 
-  public updateCurrPageNumber(
-    newPageNumber: number //  = this.currSharedPageNumber()
-  ): void {
+  public updateCurrPageNumber(newPageNumber: number): void {
     if (this.listMode() === 'SEARCH') {
       this.productListSearchService.currSearchPageNumber.set(newPageNumber);
     } else {
