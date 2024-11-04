@@ -46,7 +46,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.productIdQueryParamSub.add(
       this.navigationService
-        .handleProductIdQueryParams()
+        .handleQueryParamsForProductDetailsPage()
         .pipe(
           tap((productId) => this.productId.set(productId)),
           // prettier-ignore

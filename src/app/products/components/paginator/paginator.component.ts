@@ -6,10 +6,10 @@ import {
 } from '@angular/core';
 import {
   PRODUCT_LIST_PAGE_SIZE,
-  ProductListService,
-  TOTAL_REGULAR_LIST_LENGTH
+  ProductListService
 } from '../../../core/services/product-list/product-list.service';
 import { Router } from '@angular/router';
+import { ProductListSearchService } from '../../../core/services/product-list-search/product-list-search.service';
 
 @Component({
   selector: 'app-paginator',
@@ -23,6 +23,7 @@ export class PaginatorComponent {
   public length!: Signal<number>;
   public pageSize = PRODUCT_LIST_PAGE_SIZE;
   public disabled = false;
+  public pageNumber!: Signal<number>;
   public pageIndex!: Signal<number>;
 
   public firstPageIsDisabled!: Signal<boolean>;
@@ -32,16 +33,19 @@ export class PaginatorComponent {
   public paginatorDisplayStr!: Signal<string>;
 
   constructor(
-    private productListServece: ProductListService,
+    private readonly productListServece: ProductListService,
+    private readonly productListSearchService: ProductListSearchService,
     private readonly router: Router
   ) {
-    this.pageIndex = computed(
-      () => this.productListServece.currPageSharedPageNumber() - 1
-    );
+    this.pageNumber = computed(() => {
+      return this.productListServece.currSharedPageNumber();
+    });
+
+    this.pageIndex = computed(() => this.pageNumber() - 1);
+
     this.length = this.productListServece.totalListLength;
 
     this.firstPageIsDisabled = computed(() => {
-      console.log('this.pageIndex():', this.pageIndex());
       return this.pageIndex() === 0;
     });
 
@@ -71,26 +75,44 @@ export class PaginatorComponent {
 
   public handleFirstPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: 1 }
+      queryParams: {
+        page: 1,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
   }
 
   public handleLastPageBtn(): void {
-    const lastPage = Math.ceil(this.length() / PRODUCT_LIST_PAGE_SIZE);
+    const lastPage = Math.ceil(this.length() / PRODUCT_LIST_PAGE_SIZE); // Todo: make dynamic and handle search list as well
     this.router.navigate(['/products'], {
-      queryParams: { page: lastPage }
+      queryParams: {
+        page: lastPage,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
   }
 
   public handlePrevPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: this.pageIndex() - 1 }
+      queryParams: {
+        page: this.pageNumber() - 1,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
   }
 
   public handleNextPageBtn(): void {
     this.router.navigate(['/products'], {
-      queryParams: { page: this.pageIndex() + 2 }
+      queryParams: {
+        page: this.pageNumber() + 1,
+        search: this.getCurrSearchTermOrNull()
+      }
     });
+  }
+
+  private getCurrSearchTermOrNull(): string | null {
+    return this.productListSearchService.currSearchTerm()
+      ? this.productListSearchService.currSearchTerm()
+      : null;
   }
 }

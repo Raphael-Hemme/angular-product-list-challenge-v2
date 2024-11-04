@@ -13,8 +13,10 @@ import {
   Subscription,
   tap
 } from 'rxjs';
-import { ProductListService } from '../../../core/services/product-list/product-list.service';
 import { NgClass } from '@angular/common';
+import { ProductListSearchService } from '../../../core/services/product-list-search/product-list-search.service';
+import { ProductListService } from '../../../core/services/product-list/product-list.service';
+import { NavigationService } from '../../../core/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-search-form',
@@ -32,36 +34,21 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   private searchSub: Subscription = new Subscription();
 
   constructor(
-    private fb: FormBuilder,
-    private readonly productListService: ProductListService
+    private readonly fb: FormBuilder,
+    private readonly productListService: ProductListService,
+    private readonly productListSearchService: ProductListSearchService,
+    private readonly navigationService: NavigationService
   ) {
     this.searchForm = this.fb.group({
-      search: [this.productListService.currSearchTerm()]
+      search: [this.productListSearchService.currSearchTerm()]
     });
   }
 
   ngOnInit(): void {
-    this.searchSub.add(
-      // prettier-ignore
-      this.searchForm!.get('search')!.valueChanges
-        .pipe(
-          // prettier-ignore
-          debounceTime(500),
-          // prettier-ignore
-          distinctUntilChanged(),
-          // The following side effect is used to clear the search results when the search input
-          // is emptied with the keyboard and not with the clear button.
-          tap((value) => {
-            if (value.length === 0) {
-              this.productListService.clearSearchResults();
-            }
-          }),
-          filter((value) => value.length > 0),
-          tap((value) => this.productListService.currSearchTerm.set(value)),
-          tap((value) => this.searchProducts(value))
-        )
-        .subscribe()
-    );
+    // Update the input once initially with the potentially available search term
+    // provided via query params and updated in the ProductListSearchService signal
+    this.updateSearchInput();
+    this.handleSearchValueChanges();
   }
 
   ngOnDestroy(): void {
@@ -73,10 +60,37 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   public clearSearch(): void {
     this.searchForm!.get('search')!.setValue('');
-    this.productListService.clearSearchResults();
+    this.productListSearchService.clearSearchResults();
+    this.productListService.changeMode('RAW');
   }
 
-  private searchProducts(searchTerm: string): void {
-    this.productListService.searchProducts(searchTerm);
+  private updateSearchInput(): void {
+    const searchFormControl = this.searchForm.get('search');
+    const currSearchTermValue = this.productListSearchService.currSearchTerm();
+    if (!searchFormControl?.value && currSearchTermValue) {
+      searchFormControl?.setValue(currSearchTermValue);
+    }
+  }
+
+  private handleSearchValueChanges(): void {
+    this.searchSub.add(
+      // prettier-ignore
+      this.searchForm!.get('search')!.valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged(),
+          // The following side effect is used to clear the search results when the search input
+          // is emptied with the keyboard and not with the clear button.
+          tap((value) => {
+            if (!value || value.length === 0) {
+              this.navigationService.resetUrlFromSearchToDefaultMode();
+              this.clearSearch();
+            }
+          }),
+          filter((value) => value && value.length > 0),
+          tap((value) => this.navigationService.navigateToSearchUrl(value))
+        )
+        .subscribe()
+    );
   }
 }
