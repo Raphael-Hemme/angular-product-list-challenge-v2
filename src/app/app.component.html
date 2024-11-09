@@ -1,8 +1,11 @@
-<div class="flex min-h-screen flex-col">
+<div class="flex min-h-screen flex-col items-center bg-white dark:bg-slate-800">
   @if (!isOnSplashPage()) {
     <app-header class="fixed top-0 z-20 w-full"></app-header>
   }
-  <main class="flex flex-1" [ngClass]="!isOnSplashPage() ? 'mt-16' : ''">
+  <main
+    class="flex w-full flex-1 xl:w-10/12"
+    [ngClass]="!isOnSplashPage() ? 'mt-16' : ''"
+  >
     <div class="min-h-full flex-1">
       <router-outlet />
     </div>
