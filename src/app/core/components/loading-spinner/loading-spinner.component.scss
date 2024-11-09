@@ -6,6 +6,10 @@ $combined-header-height-s: 140px;
   top: $combined-header-height-l;
   background-color: white;
 
+  @media (prefers-color-scheme: dark) {
+    background-color: rgba(30, 41, 59, 1);
+  }
+
   @media (min-width: 769px) {
     height: calc(100vh - $combined-header-height-s);
     top: $combined-header-height-s;
