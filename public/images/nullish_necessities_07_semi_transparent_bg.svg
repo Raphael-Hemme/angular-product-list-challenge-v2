@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1080 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(0.896544,0.528939,-0.558744,0.947063,353.379,-329.285)">
+        <path d="M578.748,109.282L1012.85,351.961L1012.85,837.32L578.748,1080L144.651,837.32L144.651,351.961L578.748,109.282Z" style="fill:rgb(210,210,210);fill-opacity:0.5;"/>
+    </g>
+    <g transform="matrix(0.709943,-0.19498,-0.19498,-0.709943,194.961,880.835)">
+        <path d="M538.195,152.726L925.39,540L151,540L538.195,152.726Z" style="fill:rgb(201,232,145);"/>
+    </g>
+    <g transform="matrix(0.255315,-0.0629351,-0.0629351,-0.255315,730.061,900.879)">
+        <path d="M538.195,152.726L925.39,540L151,540L538.195,152.726Z" style="fill:rgb(240,242,35);"/>
+    </g>
+    <g transform="matrix(-0.255352,0.0627867,0.0627867,0.255352,933.411,543.742)">
+        <path d="M538.195,152.726L925.39,540L151,540L538.195,152.726Z" style="fill:rgb(241,149,200);"/>
+    </g>
+    <g transform="matrix(-0.358581,0.0979573,0.0979573,0.358581,648.549,121.15)">
+        <path d="M538.195,152.726L925.39,540L151,540L538.195,152.726Z" style="fill:rgb(248,200,44);"/>
+    </g>
+    <g transform="matrix(0.651202,0.359971,-0.359971,0.651202,393.413,141.401)">
+        <rect x="538.116" y="540.125" width="193.716" height="193.433" style="fill:rgb(167,150,194);"/>
+    </g>
+    <g transform="matrix(-0.390819,0.633169,-0.633169,-0.390819,779.939,342.466)">
+        <path d="M682.49,614.73L682.637,702.871L576.716,597.933L571.158,504.962L682.49,614.73Z" style="fill:rgb(145,166,221);"/>
+    </g>
+    <g transform="matrix(0.260438,-0.456901,-0.456901,-0.260438,765.046,880.482)">
+        <path d="M538.195,152.726L925.39,540L151,540L538.195,152.726Z" style="fill:rgb(104,192,210);"/>
+    </g>
+</svg>
