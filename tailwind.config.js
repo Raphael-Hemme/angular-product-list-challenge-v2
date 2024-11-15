@@ -8,7 +8,8 @@ export const theme = {
     },
     colors: {
       primary: 'rgba(104, 192, 210, 1)',
-      primary_dark: 'rgba(104, 192, 210, 0.6)',
+      primary_dark: 'rgb(77, 156, 172)',
+      primary_light: 'rgb(135, 220, 237)',
       secondary: 'rgba(169, 196, 120, 1)'
     }
   }
