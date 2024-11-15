@@ -18,7 +18,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    title: 'Non-Existent Necessities',
+    title: 'Nullish Necessities',
     component: SplashPageComponent
   },
   {
